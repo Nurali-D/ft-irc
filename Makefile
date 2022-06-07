@@ -1,11 +1,12 @@
 NAME = ircserv
 
-CC = clang++
+CC = c++
 
 # FLAGS = -g -fsanitize=address -Wall -Werror -Wextra -std=c++98
-FLAGS = -g -Wall -Werror -Wextra -std=c++98
+CFLAGS = -g -I/usr/include/kqueue -Wall -Werror -Wextra -std=c++98 
+LDFLAGS = -lkqueue
 
-SRCS = main.cpp \
+SRCS = main.cpp ServerSocket.cpp ServerEngine.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -14,10 +15,10 @@ DEPS = $(SRCS:.cpp=.d)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $^ -o $@
+	$(CC)  $^ -o  $@ $(LDFLAGS)
 
 %.o: %.cpp Makefile
-	$(CC) $(FLAGS) -MMD -MP -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -MP -c  $< -o $@
 
 -include $(DEPS)
 
