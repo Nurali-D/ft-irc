@@ -3,8 +3,9 @@ NAME = ircserv
 CC = c++
 
 # FLAGS = -g -fsanitize=address -Wall -Werror -Wextra -std=c++98
+OS = $(uname)
 CFLAGS = -g -I/usr/include/kqueue -Wall -Werror -Wextra -std=c++98 
-LDFLAGS = -lkqueue
+LDFLAGS = $(if $(filter-out Linux,$(OS)),$(),$(-lkqueue))
 
 SRCS = main.cpp ServerSocket.cpp ServerEngine.cpp \
 
