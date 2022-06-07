@@ -13,7 +13,7 @@ public:
 private:
 	ServerSocket	serverSocket;
 	int				kq;
-	int				flag;
+	int				flag; // temporary
 	//ClientsList
 	//ChannelsList
 	//BotsList
