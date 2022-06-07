@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
 	}
 	if (!portIsNumber(argv[1])) {
 		std::cout << "Invalid port number" << std::endl;
+		return (1);
 	}
 	std::string str("127.0.0.1");
 	const char* ip = str.c_str();
