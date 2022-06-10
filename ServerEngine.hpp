@@ -14,7 +14,7 @@ private:
 	ServerSocket	serverSocket;
 	int				kq;
 	int				flag; // temporary
-	//ClientsList
+	//Userlist
 	//ChannelsList
 	//BotsList
 	void		makeQueue();
