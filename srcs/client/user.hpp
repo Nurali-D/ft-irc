@@ -3,16 +3,26 @@
 
 #include <string>
 #include <vector>
-#include "../libraryHeaders.hpp"
+#include <stack>
+#include "../headers/libraryHeaders.hpp"
 
 class User
 {
+	enum UserCondition {
+		LOGGING,
+		ACTIVE,
+		DEACTIVE,
+	};
+
 	private:
 		int fd;
 		struct sockaddr_in address;
+		User::UserCondition condition;
 		std::string nickname;
-		std::string user;
-		std::vector<std::string> messages;
+		std::string hostname;
+		std::string servername;
+		std::string realname;
+		std::stack<std::string> messages;
 
 	public:
 		User(int fd, struct sockaddr_in address);
@@ -23,7 +33,7 @@ class User
 		void appendMessage(std::string message);
 		std::string getNickname();
 		std::string getUser();
-		std::vector<std::string> getMessages();
+		std::stack<std::string> getMessages();
 };
 
 #endif
