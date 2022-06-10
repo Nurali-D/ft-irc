@@ -1,4 +1,6 @@
-#include "ServerEngine.hpp"
+#include "headers/libraryHeaders.hpp"
+#include "server/ServerEngine.hpp"
+#include "server/ServerSocket.hpp"
 
 bool portIsNumber(char *str);
 

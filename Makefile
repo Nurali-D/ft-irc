@@ -12,8 +12,9 @@ else
 	LDFLAGS =
 endif
 
-
-SRCS = main.cpp ServerSocket.cpp ServerEngine.cpp \
+SRCS = srcs/main.cpp \
+	srcs/server/ServerSocket.cpp \
+	srcs/server/ServerEngine.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
