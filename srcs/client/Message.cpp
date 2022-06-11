@@ -45,8 +45,28 @@ void	Message::parseMessage() {
 
 void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
-	// std::cout << commandName << std::endl;
-	// switch (commandName) :
+	
+	std::map <std::string, int> mapping;
+
+	mapping["pass"] = PASS;
+	mapping["nick"] = NICK;
+	mapping["user"] = USER;
+	mapping["privmsg"] = PRIVMSG;
+
+	// switch (mapping[commandName]) {
+	// 	case PASS:
+	// 		Pass p = Pass();
+	// 		break;
+	// 	case NICK:
+	// 		Nick n = Nick();
+	// 		break;
+	// 	case USER:
+	// 		User u = User();
+	// 		break;
+	// 	case PRIVMSG:
+	// 		Privmsg p = Privmsg();
+	// 		break;
+	// }
 }
 
 std::string Message::stringToLower(std::string &str) {

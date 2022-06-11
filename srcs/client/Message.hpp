@@ -8,6 +8,12 @@
 
 class Message
 {
+	enum CmdType {
+			PASS,
+			NICK,
+			USER,
+			PRIVMSG
+		};
 
 	private:
 		User					*fromUser;
