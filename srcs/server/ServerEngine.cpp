@@ -63,7 +63,7 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
 	User *user = static_cast<User*>(eventList[i].udata);
-	Message message = Message(user, msg, usersList, channelsList);
+	Message message = Message(user, msg, usersList, channelsList); // ctrl+D in netcat problem
 	message.parseMessage();
 }
 
@@ -74,12 +74,17 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	User *user = static_cast<User*>(eventList[i].udata);
 	if (!user->getMessages().empty()) {
+		// User *user1 = usersList.front();
+		// std::stack<std::string> userStack = user1->getMessages();
+		// std::cout << "stack size before sending message = " << userStack.size() << std::endl;
 		std::string msg = user->getMessages().top();
 		user->getMessages().pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
 		if (sended == -1) {
 			printError("send() error");
 		}
+		// userStack = user1->getMessages();
+		// std::cout << "stack size after sending message = " << userStack.size() << std::endl;
 	}
 	
 	
