@@ -3,6 +3,7 @@
 User::User(int fd, struct sockaddr_in address) {
 	this->fd = fd;
 	this->address = address;
+	this->state = LOGGING;
 }
 
 User::~User() {}

@@ -8,7 +8,7 @@
 
 class User
 {
-	enum UserCondition {
+	enum UserState {
 		LOGGING,
 		ACTIVE,
 		DEACTIVE,
@@ -17,7 +17,7 @@ class User
 	private:
 		int fd;
 		struct sockaddr_in		address;
-		User::UserCondition		condition;
+		User::UserState			state;
 		std::string				nickname;
 		std::string				hostname;
 		std::string				servername;
@@ -29,10 +29,8 @@ class User
 		~User();
 
 		void					setNickname(std::string nickname);
-		// void					setUser(std::string user);
 		void					appendMessage(std::string message);
 		std::string				getNickname();
-		// std::string				getUser();
 		std::stack<std::string>	&getMessages();
 };
 
