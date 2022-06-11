@@ -16,8 +16,7 @@ class Message
 		std::vector<Channel*>	channelsList;
 
 	public:
-		Message(User *fromUser, std::string msgToParse, 
-			std::vector<User*> usersList, std::vector<Channel*> channelsList);
+		Message(User *fromUser, std::string msgToParse, std::vector<User*> usersList, std::vector<Channel*> channelsList);
 		~Message();
 
 		void	parseMessage();

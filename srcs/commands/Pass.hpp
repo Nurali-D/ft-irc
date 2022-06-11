@@ -2,8 +2,9 @@
 #define PASS_HPP
 
 #include "Command.hpp"
+#include "../headers/rpl_codes.hpp"
 
-// ARGS: {"pass": "", "server_pass": ""}
+// ARGS: {"pass": "value", "server_pass": "value"}
 
 class PassCmd : public Command
 {
