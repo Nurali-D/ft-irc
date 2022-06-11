@@ -6,8 +6,8 @@
 # include <netdb.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
-// # include <sys/event.h> //Macos
-# include </usr/include/kqueue/sys/event.h> //Linux
+# include <sys/event.h> //Macos
+// # include </usr/include/kqueue/sys/event.h> //Linux
 # include <unistd.h>
 # include <dirent.h>
 # include <sys/types.h>

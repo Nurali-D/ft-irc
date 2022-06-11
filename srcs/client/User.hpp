@@ -8,11 +8,12 @@
 
 class User
 {
-	enum UserState {
-		LOGGING,
-		ACTIVE,
-		DEACTIVE,
-	};
+	public:
+		enum UserState {
+			LOGGING,
+			ACTIVE,
+			DEACTIVE,
+		};
 
 	private:
 		int fd;
@@ -28,10 +29,17 @@ class User
 		User(int fd, struct sockaddr_in address);
 		~User();
 
+		// MARK: - setters
 		void					setNickname(std::string nickname);
-		void					appendMessage(std::string message);
+		void					setState(UserState state);
+		
+		// MARK: - getters
 		std::string				getNickname();
 		std::stack<std::string>	&getMessages();
+
+		// MARK: - methods
+		void					appendMessage(std::string message);
+		
 };
 
 #endif
