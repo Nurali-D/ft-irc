@@ -26,9 +26,10 @@ const std::string		&User::getUsername() {
 	return (this->username);
 }
 
-const std::string		&User::getAddress() {
+const std::string		User::getAddress() {
 	// get real address !!!
-	return ("127.0.0.1");
+	const std::string address = "127.0.0.1";
+	return (address);
 }
 
 const std::string		&User::getHostname() {

@@ -41,7 +41,7 @@ class User
 		const std::string		&getUsername();
 		const std::string		&getHostname();
 		std::stack<std::string>	&getMessages();
-		const std::string		&getAddress();
+		const std::string		getAddress();
 		const User::UserState	&getState();			
 
 		// MARK: - methods
