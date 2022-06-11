@@ -18,6 +18,7 @@ private:
 	ServerSocket			serverSocket;
 	std::vector<User*>		usersList;
 	std::vector<Channel*>	channelsList;
+	std::string				readedMsg;
 
 	void		makeQueue();
 	void		watchLoop();

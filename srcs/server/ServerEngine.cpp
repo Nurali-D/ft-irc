@@ -62,9 +62,13 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 	if (eventList[i].flags & EV_EOF)
 		deleteEvent(i, eventList);
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	User *user = static_cast<User*>(eventList[i].udata);
-	Message message = Message(user, msg, usersList, channelsList); // ctrl+D in netcat problem
-	message.parseMessage();
+	readedMsg += msg;
+	if (readedMsg.find("\n", 0) != std::string::npos) {
+		User *user = static_cast<User*>(eventList[i].udata);
+		Message message = Message(user, readedMsg, usersList, channelsList);
+		message.parseMessage();
+		readedMsg = "";
+	}
 }
 
 void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)

@@ -11,5 +11,50 @@ Message::Message(User *fromUser, std::string msgToParse,
 Message::~Message() {}
 
 void	Message::parseMessage() {
-	fromUser->appendMessage("Parsed " + msgToParse);
+	// fromUser->appendMessage("Parsed " + msgToParse);
+
+	std::string delimiter = " ";
+	size_t pos = 0;
+	std::string token;
+	std::vector<std::string> cmdWithArgs;
+
+	while ((pos = msgToParse.find(delimiter)) != std::string::npos) {
+		if (msgToParse.find_first_not_of(" ") == 0) {
+			token = msgToParse.substr(0, pos);
+			if (token.at(0) != ':') {
+				cmdWithArgs.push_back(token);
+				// std::cout << "|" << token << "|" << std::endl;
+			} else if (cmdWithArgs.size() > 0) {
+				msgToParse.erase(msgToParse.length() - 1, 1);
+				cmdWithArgs.push_back(msgToParse);
+				msgToParse = "";
+				break;
+			}
+		}
+		msgToParse.erase(0, pos + delimiter.length());
+	}
+	if (msgToParse != "") {
+		msgToParse.erase(msgToParse.length() - 1, 1);
+		cmdWithArgs.push_back(msgToParse);
+	}
+	// for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
+	// 	std::cout << "|" << cmdWithArgs.at(i) << "|" << std::endl;
+	// }
+	findCommand(cmdWithArgs);
+}
+
+void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
+	std::string commandName = stringToLower(cmdWithArgs.at(0));
+	// std::cout << commandName << std::endl;
+	// switch (commandName) :
+}
+
+std::string Message::stringToLower(std::string &str) {
+	char array[str.length()];
+
+	for (size_t i = 0; i < str.length(); ++i) {
+		array[i] = std::tolower(str.at(i));
+	}
+	std::string ret = std::string(array);
+	return ret;
 }
