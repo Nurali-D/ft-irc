@@ -3,7 +3,7 @@
 
 // MARK: - Class Constructor
 
-PassCmd::PassCmd(const std::map<std::string, std::string> &args, User *user) : Command(PASS, args, user) {}
+PassCmd::PassCmd(const std::map<std::string, std::string> &args, User *user) : Command(Command::PASS, args, user) {}
 
 
 // MARK: - Class Distructor
@@ -16,6 +16,5 @@ PassCmd::~PassCmd(void) {}
 void PassCmd::execute()
 {
 	if (args["pass"] && args["pass"] == args["server_pass"])
-		user->state = ACTIVE;
-		user->messages.push("")
+		user->setState(User::ACTIVE);
 }

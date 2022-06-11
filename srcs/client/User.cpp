@@ -28,3 +28,8 @@ std::stack<std::string>	&User::getMessages() {
 	return messages;
 }
 
+void					User::setState(User::UserState state)
+{
+	this->state = state;
+}
+
