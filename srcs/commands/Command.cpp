@@ -3,6 +3,7 @@
 
 // MARK: - Class Constructor
 
+
 Command::Command(const Command::CmdType &cmd, const std::map<std::string, std::string> &args, User *user)
 :
 	cmd(cmd),

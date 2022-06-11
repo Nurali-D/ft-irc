@@ -17,7 +17,11 @@ SRCS = srcs/main.cpp \
 	srcs/server/ServerEngine.cpp \
 	srcs/client/Channel.cpp \
 	srcs/client/User.cpp \
-	srcs/client/Message.cpp
+	srcs/client/Message.cpp \
+	srcs/commands/Command.cpp \
+	srcs/commands/PassCmd.cpp \
+	srcs/commands/NickCmd.cpp \
+	srcs/commands/UserCmd.cpp 
 
 OBJS = $(SRCS:.cpp=.o)
 

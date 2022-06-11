@@ -49,25 +49,48 @@ void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
 	
 	std::map <std::string, int> mapping;
+	std::map<std::string, std::string> cmdArgs;
 
-	mapping["pass"] = Command::PASS;
-	mapping["nick"] = Command::NICK;
-	mapping["user"] = Command::USER;
-	mapping["privmsg"] = Command::PRIVMSG;
+	if (commandName == "pass") {
+		cmdArgs["pass"] = cmdWithArgs.at(1);
+		cmdArgs["server_pass"] = password;
+		PassCmd p = PassCmd(cmdArgs, fromUser);
+		p.execute();
+	} else if (commandName == "nick") {
+		cmdArgs["nickname"] = cmdWithArgs.at(1);
+		NickCmd n = NickCmd(cmdArgs, fromUser);
+		n.execute();
+	} else if (commandName == "user") {
+		cmdArgs["username"] = cmdWithArgs.at(1);
+		UserCmd u = UserCmd(cmdArgs, fromUser);
+		u.execute();
+	}
+	// mapping["pass"] = Command::PASS;
+	// mapping["nick"] = Command::NICK;
+	// mapping["user"] = Command::USER;
+	// mapping["privmsg"] = Command::PRIVMSG;
+	// // Command c;
 
 	// switch (mapping[commandName]) {
-	// 	case PASS:
-	// 		Pass p = Pass();
+	// 	case (Command::PASS):
+	// 		cmdArgs["pass"] = cmdWithArgs.at(1);
+	// 		cmdArgs["server_pass"] = password;
+	// 		PassCmd p = PassCmd(cmdArgs, fromUser);
+	// 		p.execute();
 	// 		break;
-	// 	case NICK:
-	// 		Nick n = Nick();
+	// 	case (Command::NICK):
+	// 		cmdArgs["nickname"] = cmdWithArgs.at(1);
+	// 		NickCmd n = NickCmd(cmdArgs, fromUser);
+	// 		n.execute();
 	// 		break;
-	// 	case USER:
-	// 		UserCmd u = UserCmd();
+	// 	case (Command::USER):
+	// 		cmdArgs["username"] = cmdWithArgs.at(1);
+	// 		UserCmd u = UserCmd(cmdArgs, fromUser);
+	// 		u.execute();
 	// 		break;
-	// 	case PRIVMSG:
-	// 		Privmsg p = Privmsg();
-	// 		break;
+	// 	// case PRIVMSG:
+	// 	// 	Privmsg p = Privmsg();
+	// 	// 	break;
 	// }
 }
 

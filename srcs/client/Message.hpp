@@ -6,10 +6,10 @@
 #include "../headers/libraryHeaders.hpp"
 #include "User.hpp"
 #include "Channel.hpp"
-// #include "../commands/Nick.hpp"
-// #include "../commands/Pass.hpp"
+#include "../commands/NickCmd.hpp"
+#include "../commands/PassCmd.hpp"
 // #include "../commands/Privmsg.hpp"
-// #include "../commands/UserCmd.hpp"
+#include "../commands/UserCmd.hpp"
 class Message
 {
 	

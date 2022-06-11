@@ -1,22 +1,21 @@
-#include "UserCmd.hpp"
-
+#include "NickCmd.hpp"
 
 // MARK: - Class Constructor
 
-UserCmd::UserCmd(const std::map<std::string, std::string> &args, User *user) : Command(USER, args, user) {}
+NickCmd::NickCmd(const std::map<std::string, std::string> &args, User *user) : Command(NICK, args, user) {}
 
 
-// MARK: - Class Destructor
+// MARK: - Class Distructor
 
-UserCmd::~UserCmd(void) {}
+NickCmd::~NickCmd(void) {}
 
 
 // MARK: - Class Methods
 
-void	UserCmd::execute(void)
+void	NickCmd::execute()
 {
-	if (args["username"]) {
-		user->setUsername(args["username"])
+	if (args["nickname"]) {
+		user->setNickname(args["nickname"]);
 		if (user->getState() == User::AUTH && user->isNickAndHostname()) {
 			user->appendMessage(":server " + std::string(RPL_WELCOME) + " "
 			+ user->getNickname() + " :Welcome to the Internet Relay Network "

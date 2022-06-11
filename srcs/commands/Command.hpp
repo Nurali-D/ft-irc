@@ -24,6 +24,7 @@ class Command
 		std::vector<Channel*> &channelsList;
 
 	public:
+
 		Command(const CmdType &cmd, const std::map<std::string, std::string> &args, User *user);
 		virtual ~Command(void);
 

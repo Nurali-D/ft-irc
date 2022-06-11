@@ -11,6 +11,7 @@ class User
 	public:
 		enum UserState {
 			LOGGING,
+			AUTH,
 			ACTIVE,
 			DEACTIVE,
 		};
@@ -20,6 +21,7 @@ class User
 		struct sockaddr_in		address;
 		User::UserState			state;
 		std::string				nickname;
+		std::string				username;
 		std::string				hostname;
 		std::string				servername;
 		std::string				realname;
@@ -31,14 +33,20 @@ class User
 
 		// MARK: - setters
 		void					setNickname(std::string nickname);
+		void					setUsername(std::string username);
 		void					setState(UserState state);
 		
 		// MARK: - getters
-		std::string				getNickname();
+		const std::string		&getNickname();
+		const std::string		&getUsername();
+		const std::string		&getHostname();
 		std::stack<std::string>	&getMessages();
+		const std::string		getAddress();
+		const User::UserState	&getState();			
 
 		// MARK: - methods
 		void					appendMessage(std::string message);
+		bool					isNickAndHostname();
 		
 };
 

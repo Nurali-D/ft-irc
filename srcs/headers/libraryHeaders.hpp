@@ -27,4 +27,6 @@
 # include <sstream>
 # include <ctime>
 
+# include "rpl_codes.hpp"
+
 #endif
