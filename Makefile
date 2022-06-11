@@ -14,7 +14,10 @@ endif
 
 SRCS = srcs/main.cpp \
 	srcs/server/ServerSocket.cpp \
-	srcs/server/ServerEngine.cpp
+	srcs/server/ServerEngine.cpp \
+	srcs/client/Channel.cpp \
+	srcs/client/User.cpp \
+	srcs/client/Message.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

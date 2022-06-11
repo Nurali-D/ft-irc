@@ -1,7 +1,6 @@
 #include "ServerEngine.hpp"
 
 ServerEngine::ServerEngine(ServerSocket &serverSocket) {
-	flag = 0;
 	this->serverSocket = serverSocket;
 	makeQueue();
 }
@@ -28,9 +27,10 @@ void	ServerEngine::acceptNewClient(int i, struct kevent *eventList)
 	}
 	int opt = 1;
 	setsockopt(newEventFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-
-	EV_SET(&evSet[0], newEventFd, EVFILT_READ, EV_ADD, 0, 0, 0);
-	EV_SET(&evSet[1], newEventFd, EVFILT_WRITE, EV_ADD, 0, 0, 0);
+	User *user = new User(newEventFd, addr);
+	usersList.push_back(user);
+	EV_SET(&evSet[0], newEventFd, EVFILT_READ, EV_ADD, 0, 0, static_cast<void*>(user));
+	EV_SET(&evSet[1], newEventFd, EVFILT_WRITE, EV_ADD, 0, 0, static_cast<void*>(user));
 	if (kevent(kq, evSet, 2, NULL, 0, NULL) == -1)
 		return (printError("kevent() error 1"));
 }
@@ -62,8 +62,9 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 	if (eventList[i].flags & EV_EOF)
 		deleteEvent(i, eventList);
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	// parse_commands
-	std::cout << "msg = " + msg << std::endl;
+	User *user = static_cast<User*>(eventList[i].udata);
+	Message message = Message(user, msg, usersList, channelsList);
+	message.parseMessage();
 }
 
 void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
@@ -71,11 +72,14 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 	
 	if (eventList[i].flags & EV_EOF)
 		deleteEvent(i, eventList);
-	if (flag == 0) {
-		ssize_t sended = send(eventList[i].ident, "hello from server", 18, 0);
-		if (sended == -1)
+	User *user = static_cast<User*>(eventList[i].udata);
+	if (!user->getMessages().empty()) {
+		std::string msg = user->getMessages().top();
+		user->getMessages().pop();
+		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
+		if (sended == -1) {
 			printError("send() error");
-		flag = 1;
+		}
 	}
 	
 	

@@ -1,5 +1,8 @@
 #include "../headers/libraryHeaders.hpp"
 #include "ServerSocket.hpp"
+#include "../client/User.hpp"
+#include "../client/Channel.hpp"
+#include "../client/Message.hpp"
 
 #ifndef SERVERENGINE_HPP
 # define SERVERENGINE_HPP
@@ -11,12 +14,11 @@ public:
 	~ServerEngine();
 
 private:
-	ServerSocket	serverSocket;
-	int				kq;
-	int				flag; // temporary
-	//Userlist
-	//ChannelsList
-	//BotsList
+	int						kq;
+	ServerSocket			serverSocket;
+	std::vector<User*>		usersList;
+	std::vector<Channel*>	channelsList;
+
 	void		makeQueue();
 	void		watchLoop();
 	void		acceptNewClient(int i, struct kevent *eventList);
