@@ -65,7 +65,8 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 	readedMsg += msg;
 	if (readedMsg.find("\n", 0) != std::string::npos) {
 		User *user = static_cast<User*>(eventList[i].udata);
-		Message message = Message(user, readedMsg, usersList, channelsList);
+		Message message = Message(user, readedMsg, usersList, channelsList, 
+			serverSocket.getPassword());
 		message.parseMessage();
 		readedMsg = "";
 	}

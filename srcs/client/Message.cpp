@@ -1,11 +1,13 @@
 #include "Message.hpp"
 
 Message::Message(User *fromUser, std::string msgToParse, 
-		std::vector<User*> usersList, std::vector<Channel*> channelsList) {
+		std::vector<User*> usersList, std::vector<Channel*> channelsList,
+		std::string password) {
 	this->fromUser = fromUser;
 	this->msgToParse = msgToParse;
 	this->usersList = usersList;
 	this->channelsList = channelsList;
+	this->password = password;
 }
 
 Message::~Message() {}
@@ -48,10 +50,10 @@ void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
 	
 	std::map <std::string, int> mapping;
 
-	mapping["pass"] = PASS;
-	mapping["nick"] = NICK;
-	mapping["user"] = USER;
-	mapping["privmsg"] = PRIVMSG;
+	mapping["pass"] = Command::PASS;
+	mapping["nick"] = Command::NICK;
+	mapping["user"] = Command::USER;
+	mapping["privmsg"] = Command::PRIVMSG;
 
 	// switch (mapping[commandName]) {
 	// 	case PASS:
@@ -61,7 +63,7 @@ void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
 	// 		Nick n = Nick();
 	// 		break;
 	// 	case USER:
-	// 		User u = User();
+	// 		UserCmd u = UserCmd();
 	// 		break;
 	// 	case PRIVMSG:
 	// 		Privmsg p = Privmsg();
