@@ -9,7 +9,6 @@ MessageHandler::MessageHandler(User *fromUser, std::vector<User*> *usersList,
 		: fromUser(fromUser), 
 		usersList(usersList), 
 		channelsList(channelsList) {
-	this->msgToParse = msgToParse;
 	this->password = password;
 }
 
@@ -49,13 +48,12 @@ void	MessageHandler::parseMessage() {
 	// for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
 	// 	std::cout << "|" << cmdWithArgs.at(i) << "|" << std::endl;
 	// }
-	std::cout << fromUser << std::endl;
+	// std::cout << fromUser << std::endl;
 	findCommand(cmdWithArgs);
 }
 
 void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
-	
 	std::map <std::string, int> mapping;
 	std::map<std::string, std::string> cmdArgs;
 
@@ -106,11 +104,12 @@ void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 }
 
 std::string MessageHandler::stringToLower(std::string &str) {
-	char array[str.length()];
+	char array[str.length() + 1];
 
 	for (size_t i = 0; i < str.length(); ++i) {
 		array[i] = std::tolower(str.at(i));
 	}
+	array[str.length()] = '\0';
 	std::string ret = std::string(array);
 	return ret;
 }

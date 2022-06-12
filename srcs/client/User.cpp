@@ -62,5 +62,5 @@ void					User::setUsername(std::string username)
 
 bool	User::isNickAndHostname()
 {
-	return (!this->nickname.empty() && !this->hostname.empty());
+	return (!this->nickname.empty() && !this->username.empty());
 }
