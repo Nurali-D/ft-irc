@@ -1,16 +1,23 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 
-#include "../commands/Command.hpp"
+
+
 #include <stack>
 #include "../headers/libraryHeaders.hpp"
-#include "User.hpp"
-#include "Channel.hpp"
-#include "../commands/NickCmd.hpp"
-#include "../commands/PassCmd.hpp"
+// #include "../commands/NickCmd.hpp"
+// #include "../commands/PassCmd.hpp"
 // #include "../commands/Privmsg.hpp"
-#include "../commands/UserCmd.hpp"
-class Message
+// #include "../commands/UserCmd.hpp"
+
+class Command;
+
+class MessageHandler;
+
+#include "Channel.hpp"
+#include "User.hpp"
+
+class MessageHandler
 {
 
 	private:
@@ -25,12 +32,12 @@ class Message
 		Command					*createCommand(std::string &commandName);
 
 	public:
-		Message(User *fromUser, std::string msgToParse, 
-			std::vector<User*> *usersList, std::vector<Channel*> *channelsList,
-			std::string password);
-		~Message();
+		MessageHandler(User *fromUser, std::vector<User*> *usersList, 
+			std::vector<Channel*> *channelsList, std::string password);
+		~MessageHandler();
 
 		void	parseMessage();
+		void	setMsgToParse(std::string msgToParse);
 };
 
 #endif

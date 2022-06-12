@@ -4,7 +4,12 @@
 #include <string>
 #include <vector>
 #include <stack>
+
 #include "../headers/libraryHeaders.hpp"
+
+class User;
+
+#include "MessageHandler.hpp"
 
 class User
 {
@@ -26,6 +31,8 @@ class User
 		std::string				servername;
 		std::string				realname;
 		std::stack<std::string>	messages;
+		MessageHandler			*msgHandler;
+		std::vector<Channel*>	joinedChannels;
 
 	public:
 		User(int fd, struct sockaddr_in address);
@@ -35,6 +42,7 @@ class User
 		void					setNickname(std::string nickname);
 		void					setUsername(std::string username);
 		void					setState(UserState state);
+		void					setMsgHandler(MessageHandler *msgHandler);
 		
 		// MARK: - getters
 		const std::string		&getNickname();
@@ -42,7 +50,8 @@ class User
 		const std::string		&getHostname();
 		std::stack<std::string>	&getMessages();
 		const std::string		getAddress();
-		const User::UserState	&getState();			
+		const User::UserState	&getState();	
+		MessageHandler			*getMsgHandler();		
 
 		// MARK: - methods
 		void					appendMessage(std::string message);

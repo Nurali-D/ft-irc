@@ -2,8 +2,11 @@
 #define CHANNEL_HPP
 
 #include "../headers/libraryHeaders.hpp"
-#include "User.hpp"
 
+
+class Channel;
+
+#include "User.hpp"
 
 class Channel
 {

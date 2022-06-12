@@ -12,7 +12,13 @@ void					User::setNickname(std::string nickname) {
 	this->nickname = nickname;
 }
 
+void					User::setMsgHandler(MessageHandler *msgHandler) {
+	this->msgHandler = msgHandler;
+}
 
+MessageHandler			*User::getMsgHandler() {
+	return msgHandler;
+}
 
 void					User::appendMessage(std::string message) {
 	this->messages.push(message);

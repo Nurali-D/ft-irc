@@ -2,7 +2,7 @@
 #include "ServerSocket.hpp"
 #include "../client/User.hpp"
 #include "../client/Channel.hpp"
-#include "../client/Message.hpp"
+#include "../client/MessageHandler.hpp"
 
 #ifndef SERVERENGINE_HPP
 # define SERVERENGINE_HPP

@@ -65,11 +65,22 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 	readedMsg += msg;
 	if (readedMsg.find("\n", 0) != std::string::npos) {
 		User *user = static_cast<User*>(eventList[i].udata);
-		Message message = Message(user, readedMsg, &usersList, &channelsList, 
-			serverSocket.getPassword());
-		message.parseMessage();
+		MessageHandler *msgHandler = user->getMsgHandler();
+		if (msgHandler == NULL) {
+			msgHandler = new MessageHandler(user, &usersList, &channelsList, 
+				serverSocket.getPassword());
+		}
+		msgHandler->setMsgToParse(readedMsg);
+		msgHandler->parseMessage();
 		readedMsg = "";
+		std::cerr << "nickname: " << user->getNickname()
+			<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
+	// for (size_t i = 0; i < usersList.size(); ++i) {
+	// 	User *u = usersList.at(i);
+	// 	std::cout << "user " << i << u << " nickname: " << u->getNickname()
+	// 		<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
+	// }
 }
 
 void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
@@ -103,6 +114,7 @@ void	ServerEngine::watchLoop()
 	while (true)
 	{
 		eventNumber = kevent(kq, NULL, 0, eventList, 1024, NULL);
+
 		if (eventNumber < 1)
 		{
 			std::cerr << std::strerror(errno) << std::endl;
