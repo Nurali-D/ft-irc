@@ -2,7 +2,7 @@
 
 // MARK: - Class Constructor
 
-NickCmd::NickCmd(const std::map<std::string, std::string> &args, User *user) : Command(NICK, args, user) {}
+NickCmd::NickCmd(std::map<std::string, std::string> &args, User *user) : Command(NICK, args, user) {}
 
 
 // MARK: - Class Distructor
@@ -14,7 +14,7 @@ NickCmd::~NickCmd(void) {}
 
 void	NickCmd::execute()
 {
-	if (args["nickname"]) {
+	if (args.find("nickname") != args.end()) {
 		user->setNickname(args["nickname"]);
 		if (user->getState() == User::AUTH && user->isNickAndHostname()) {
 			user->appendMessage(":server " + std::string(RPL_WELCOME) + " "

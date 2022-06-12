@@ -9,7 +9,7 @@
 class UserCmd : public Command
 {
 	public:
-		UserCmd(const std::map<std::string, std::string> &args, User *user);
+		UserCmd(std::map<std::string, std::string> &args, User *user);
 		~UserCmd(void);
 
 		void execute();

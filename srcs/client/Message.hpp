@@ -12,19 +12,21 @@
 #include "../commands/UserCmd.hpp"
 class Message
 {
-	
+
 	private:
 		User					*fromUser;
 		std::string				msgToParse;
-		std::vector<User*>		usersList;
-		std::vector<Channel*>	channelsList;
+		std::string				password;
+		std::vector<User*>		*usersList;
+		std::vector<Channel*>	*channelsList;
+
 		void					findCommand(std::vector<std::string> &cmdWithArgs);
 		std::string				stringToLower(std::string &str);
-		std::string				password;
+		Command					*createCommand(std::string &commandName);
 
 	public:
 		Message(User *fromUser, std::string msgToParse, 
-			std::vector<User*> usersList, std::vector<Channel*> channelsList,
+			std::vector<User*> *usersList, std::vector<Channel*> *channelsList,
 			std::string password);
 		~Message();
 

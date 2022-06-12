@@ -9,7 +9,7 @@
 class NickCmd : public Command
 {
 	public:
-		NickCmd(const std::map<std::string, std::string> &args, User *user);
+		NickCmd(std::map<std::string, std::string> &args, User *user);
 		~NickCmd(void);
 
 		void execute();

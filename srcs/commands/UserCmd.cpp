@@ -3,7 +3,7 @@
 
 // MARK: - Class Constructor
 
-UserCmd::UserCmd(const std::map<std::string, std::string> &args, User *user) : Command(USER, args, user) {}
+UserCmd::UserCmd(std::map<std::string, std::string> &args, User *user) : Command(USER, args, user) {}
 
 
 // MARK: - Class Destructor
@@ -15,8 +15,8 @@ UserCmd::~UserCmd(void) {}
 
 void	UserCmd::execute(void)
 {
-	if (args["username"]) {
-		user->setUsername(args["username"])
+	if (args.find("username") != args.end()) {
+		user->setUsername(args["username"]);
 		if (user->getState() == User::AUTH && user->isNickAndHostname()) {
 			user->appendMessage(":server " + std::string(RPL_WELCOME) + " "
 			+ user->getNickname() + " :Welcome to the Internet Relay Network "

@@ -1,12 +1,10 @@
 #include "Message.hpp"
 
 Message::Message(User *fromUser, std::string msgToParse, 
-		std::vector<User*> usersList, std::vector<Channel*> channelsList,
-		std::string password) {
+		std::vector<User*> *usersList, std::vector<Channel*> *channelsList,
+		std::string password) : usersList(usersList), channelsList(channelsList) {
 	this->fromUser = fromUser;
 	this->msgToParse = msgToParse;
-	this->usersList = usersList;
-	this->channelsList = channelsList;
 	this->password = password;
 }
 
@@ -52,16 +50,19 @@ void	Message::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::map<std::string, std::string> cmdArgs;
 
 	if (commandName == "pass") {
-		cmdArgs["pass"] = cmdWithArgs.at(1);
+		if (cmdWithArgs.size() > 1)
+			cmdArgs["pass"] = cmdWithArgs.at(1);
 		cmdArgs["server_pass"] = password;
 		PassCmd p = PassCmd(cmdArgs, fromUser);
 		p.execute();
 	} else if (commandName == "nick") {
-		cmdArgs["nickname"] = cmdWithArgs.at(1);
+		if (cmdWithArgs.size() > 1)
+			cmdArgs["nickname"] = cmdWithArgs.at(1);
 		NickCmd n = NickCmd(cmdArgs, fromUser);
 		n.execute();
 	} else if (commandName == "user") {
-		cmdArgs["username"] = cmdWithArgs.at(1);
+		if (cmdWithArgs.size() > 1)
+			cmdArgs["username"] = cmdWithArgs.at(1);
 		UserCmd u = UserCmd(cmdArgs, fromUser);
 		u.execute();
 	}

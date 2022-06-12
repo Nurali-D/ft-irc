@@ -9,7 +9,7 @@
 class PassCmd : public Command
 {
 	public:
-		PassCmd(const std::map<std::string, std::string> &args, User *user);
+		PassCmd(std::map<std::string, std::string> &args, User *user);
 		~PassCmd(void);
 
 		void execute();
