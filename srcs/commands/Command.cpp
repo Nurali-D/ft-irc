@@ -4,7 +4,7 @@
 // MARK: - Class Constructor
 
 
-Command::Command(Command::CmdType &cmd, std::vector<std::string> &args, User *user)
+Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *user)
 :
 	cmd(cmd),
 	args(args),

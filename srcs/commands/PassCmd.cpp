@@ -20,6 +20,7 @@ void PassCmd::execute()
 	if (args.at(1) != args.at(2)) {
 		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " :Password incorrect!");
 		user->appendMessage(":server KILL " + user->getAddress() + " :Bad password");
+		user->setState(User::DEACTIVE);
 		return ;
 	}
 	if (user->getState() == User::ACTIVE)

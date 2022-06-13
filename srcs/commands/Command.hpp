@@ -16,7 +16,7 @@ class Command
 		};
 
 	protected:
-		const CmdType &cmd;
+		CmdType cmd;
 		std::vector<std::string> &args;
 		User *user;
 
@@ -24,7 +24,7 @@ class Command
 		std::vector<Channel*> *channelsList;
 
 	public:
-		Command(CmdType &cmd, std::vector<std::string> &args, User *user);
+		Command(CmdType cmd, std::vector<std::string> &args, User *user);
 		virtual ~Command(void);
 
 		virtual void execute() = 0;
