@@ -55,25 +55,16 @@ void	MessageHandler::parseMessage() {
 void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
 	std::map <std::string, int> mapping;
-	std::map<std::string, std::string> cmdArgs;
 
 	if (commandName == "pass") {
-		if (cmdWithArgs.size() > 1)
-			cmdArgs["pass"] = cmdWithArgs.at(1);
-		cmdArgs["server_pass"] = password;
-		PassCmd p = PassCmd(cmdArgs, fromUser);
-		p.execute();
+		cmdWithArgs.push_back(password);
+		PassCmd(cmdWithArgs, fromUser).execute() ;
 	} else if (commandName == "nick") {
-		if (cmdWithArgs.size() > 1)
-			cmdArgs["nickname"] = cmdWithArgs.at(1);
-		NickCmd n = NickCmd(cmdArgs, fromUser);
-		n.execute();
+		NickCmd(cmdWithArgs, fromUser).execute();
 	} else if (commandName == "user") {
-		if (cmdWithArgs.size() > 1)
-			cmdArgs["username"] = cmdWithArgs.at(1);
-		UserCmd u = UserCmd(cmdArgs, fromUser);
-		u.execute();
+		UserCmd(cmdWithArgs, fromUser).execute();
 	}
+	
 	// mapping["pass"] = Command::PASS;
 	// mapping["nick"] = Command::NICK;
 	// mapping["user"] = Command::USER;
