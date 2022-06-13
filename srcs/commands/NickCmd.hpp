@@ -4,12 +4,11 @@
 #include "../headers/libraryHeaders.hpp"
 #include "Command.hpp"
 
-// ARGS: {"nickname": "value"}
 
 class NickCmd : public Command
 {
 	public:
-		NickCmd(std::map<std::string, std::string> &args, User *user);
+		NickCmd(std::vector<std::string> &args, User *user);
 		~NickCmd(void);
 
 		void execute();

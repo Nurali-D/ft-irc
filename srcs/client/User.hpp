@@ -55,7 +55,7 @@ class User
 
 		// MARK: - methods
 		void					appendMessage(std::string message);
-		bool					isNickAndHostname();
+		bool					isNickAndUsername();
 		
 };
 

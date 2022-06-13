@@ -50,17 +50,14 @@ std::stack<std::string>	&User::getMessages() {
 	return (this->messages);
 }
 
-void					User::setState(User::UserState state)
-{
+void					User::setState(User::UserState state) {
 	this->state = state;
 }
 
-void					User::setUsername(std::string username)
-{
+void					User::setUsername(std::string username) {
 	this->username = username;
 }
 
-bool	User::isNickAndHostname()
-{
+bool	User::isNickAndUsername() {
 	return (!this->nickname.empty() && !this->username.empty());
 }

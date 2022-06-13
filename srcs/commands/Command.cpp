@@ -4,12 +4,11 @@
 // MARK: - Class Constructor
 
 
-Command::Command(const Command::CmdType &cmd, std::map<std::string, std::string> &args, User *user)
+Command::Command(Command::CmdType &cmd, std::vector<std::string> &args, User *user)
 :
-	user(user),
 	cmd(cmd),
-	args(args)
-	
+	args(args),
+	user(user)
 {}
 
 
@@ -20,12 +19,10 @@ Command::~Command(void) {}
 
 // MARK: - Class Methods
 
-void Command::setUsersList(std::vector<User*> *usersList)
-{
+void Command::setUsersList(std::vector<User*> *usersList) {
 	this->usersList = usersList;
 }
 
-void Command::setChannelsList(std::vector<Channel*> *channelsList)
-{
+void Command::setChannelsList(std::vector<Channel*> *channelsList) {
 	this->channelsList = channelsList;
 }

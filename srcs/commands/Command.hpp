@@ -16,22 +16,20 @@ class Command
 		};
 
 	protected:
-		User *user;
 		const CmdType &cmd;
-		std::map<std::string, std::string> &args;
+		std::vector<std::string> &args;
+		User *user;
 
 		std::vector<User*> *usersList;
 		std::vector<Channel*> *channelsList;
 
 	public:
-
-		Command(const CmdType &cmd, std::map<std::string, std::string> &args, User *user);
+		Command(CmdType &cmd, std::vector<std::string> &args, User *user);
 		virtual ~Command(void);
 
 		virtual void execute() = 0;
 		void setUsersList(std::vector<User*> *usersList);
 		void setChannelsList(std::vector<Channel*> *channelsList);
-
 };
 
 #endif
