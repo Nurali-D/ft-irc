@@ -14,13 +14,13 @@ NickCmd::~NickCmd(void) {}
 // MARK: - Class Methods
 
 void	NickCmd::execute() {
-	if (args.size() != 2)
+	if (args.size() != 3)
 		return ;							// note: найти код ошибки для неправильного количества аргументов
 	
 	user->setNickname(args.at(1));
 	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
 		user->appendMessage(":server " + std::string(RPL_WELCOME) + " "
 		+ user->getNickname() + " :Welcome to the Internet Relay Network "
-		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress());
+		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress()); // note: message + "\r\n", клиент должен знать конец сообщения 
 	}
 }

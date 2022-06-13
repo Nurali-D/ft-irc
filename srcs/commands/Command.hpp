@@ -23,6 +23,9 @@ class Command
 		std::vector<User*> *usersList;
 		std::vector<Channel*> *channelsList;
 
+	private:
+		static const std::string cmdsArray[];
+
 	public:
 		Command(CmdType cmd, std::vector<std::string> &args, User *user);
 		virtual ~Command(void);
@@ -30,6 +33,7 @@ class Command
 		virtual void execute() = 0;
 		void setUsersList(std::vector<User*> *usersList);
 		void setChannelsList(std::vector<Channel*> *channelsList);
+		static Command *createCmd(std::string &cmdName, std::vector<std::string> &args, User *user);
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "../commands/PassCmd.hpp"
 #include "../commands/Privmsg.hpp"
 #include "../commands/UserCmd.hpp"
+#include "../commands/Command.hpp"
 
 MessageHandler::MessageHandler(User *fromUser, std::vector<User*> *usersList, 
 		std::vector<Channel*> *channelsList, std::string password) 
@@ -19,8 +20,6 @@ void	MessageHandler::setMsgToParse(std::string msgToParse) {
 }
 
 void	MessageHandler::parseMessage() {
-	// fromUser->appendMessage("Parsed " + msgToParse);
-
 	std::string delimiter = " ";
 	size_t pos = 0;
 	std::string token;
@@ -31,7 +30,6 @@ void	MessageHandler::parseMessage() {
 			token = msgToParse.substr(0, pos);
 			if (token.at(0) != ':') {
 				cmdWithArgs.push_back(token);
-				// std::cout << "|" << token << "|" << std::endl;
 			} else if (cmdWithArgs.size() > 0) {
 				msgToParse.erase(msgToParse.length() - 1, 1);
 				cmdWithArgs.push_back(msgToParse);
@@ -45,53 +43,18 @@ void	MessageHandler::parseMessage() {
 		msgToParse.erase(msgToParse.length() - 1, 1);
 		cmdWithArgs.push_back(msgToParse);
 	}
-	// for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
-	// 	std::cout << "|" << cmdWithArgs.at(i) << "|" << std::endl;
-	// }
-	// std::cout << fromUser << std::endl;
+	cmdWithArgs.push_back(password);
 	findCommand(cmdWithArgs);
 }
 
 void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
-	std::map <std::string, int> mapping;
-
-	if (commandName == "pass") {
-		cmdWithArgs.push_back(password);
-		PassCmd(cmdWithArgs, fromUser).execute() ;
-	} else if (commandName == "nick") {
-		NickCmd(cmdWithArgs, fromUser).execute();
-	} else if (commandName == "user") {
-		UserCmd(cmdWithArgs, fromUser).execute();
-	}
 	
-	// mapping["pass"] = Command::PASS;
-	// mapping["nick"] = Command::NICK;
-	// mapping["user"] = Command::USER;
-	// mapping["privmsg"] = Command::PRIVMSG;
-	// // Command c;
-
-	// switch (mapping[commandName]) {
-	// 	case (Command::PASS):
-	// 		cmdArgs["pass"] = cmdWithArgs.at(1);
-	// 		cmdArgs["server_pass"] = password;
-	// 		PassCmd p = PassCmd(cmdArgs, fromUser);
-	// 		p.execute();
-	// 		break;
-	// 	case (Command::NICK):
-	// 		cmdArgs["nickname"] = cmdWithArgs.at(1);
-	// 		NickCmd n = NickCmd(cmdArgs, fromUser);
-	// 		n.execute();
-	// 		break;
-	// 	case (Command::USER):
-	// 		cmdArgs["username"] = cmdWithArgs.at(1);
-	// 		UserCmd u = UserCmd(cmdArgs, fromUser);
-	// 		u.execute();
-	// 		break;
-	// 	// case PRIVMSG:
-	// 	// 	Privmsg p = Privmsg();
-	// 	// 	break;
-	// }
+	Command *cmd = Command::createCmd(commandName, cmdWithArgs, fromUser);
+	if (cmd != NULL) {
+		cmd->execute();
+	}
+	// note: if (cmd == NULL) return error message to user
 }
 
 std::string MessageHandler::stringToLower(std::string &str) {
