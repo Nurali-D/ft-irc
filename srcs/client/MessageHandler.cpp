@@ -25,13 +25,19 @@ void	MessageHandler::parseMessage() {
 	std::string token;
 	std::vector<std::string> cmdWithArgs;
 
+	size_t positionToErase = msgToParse.find("\r\n");
+	if (positionToErase != std::string::npos) {
+		msgToParse.erase(positionToErase, 2);
+		// std::cout << "\\r\\n erased from:\n" << msgToParse << std::endl;
+	}
 	while ((pos = msgToParse.find(delimiter)) != std::string::npos) {
 		if (msgToParse.find_first_not_of(" ") == 0) {
 			token = msgToParse.substr(0, pos);
-			if (token.at(0) != ':') {
+			char zeroPos = token.at(0);
+			if (zeroPos != ':') {
 				cmdWithArgs.push_back(token);
 			} else if (cmdWithArgs.size() > 0) {
-				msgToParse.erase(msgToParse.length() - 1, 1);
+				// std::cout << "-------------------|" << msgToParse << "|" << std::endl;
 				cmdWithArgs.push_back(msgToParse);
 				msgToParse = "";
 				break;
@@ -40,7 +46,7 @@ void	MessageHandler::parseMessage() {
 		msgToParse.erase(0, pos + delimiter.length());
 	}
 	if (msgToParse != "") {
-		msgToParse.erase(msgToParse.length() - 1, 1);
+		// msgToParse.erase(msgToParse.length() - 1, 1);
 		cmdWithArgs.push_back(msgToParse);
 	}
 	cmdWithArgs.push_back(password);

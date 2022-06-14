@@ -15,8 +15,10 @@ PassCmd::~PassCmd(void) {}
 
 void PassCmd::execute()
 {
-	if (args.size() != 3)
+	if (args.size() != 3) {
+		user->appendMessage(":server " + std::string(ERR_NEEDMOREPARAMS) + " :Need more params!");
 		return ;
+	}
 	if (args.at(1) != args.at(2)) {
 		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " :Password incorrect!");
 		user->appendMessage(":server KILL " + user->getAddress() + " :Bad password");

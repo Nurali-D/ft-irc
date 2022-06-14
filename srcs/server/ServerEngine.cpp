@@ -70,6 +70,7 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 			msgHandler = new MessageHandler(user, &usersList, &channelsList, 
 				serverSocket.getPassword());
 		}
+		// std::cout << "received message :\n" << readedMsg << std::endl;
 		msgHandler->setMsgToParse(readedMsg);
 		msgHandler->parseMessage();
 		readedMsg = "";
@@ -120,7 +121,7 @@ void		ServerEngine::deleteNonactiveUsersChannels() {
 			// deleteUserFromChannels(user); // note: need to modify
 			break;
 		}
-		//note: delete user;
+		// delete user;
 	}
 
 	
