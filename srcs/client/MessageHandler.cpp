@@ -1,7 +1,7 @@
 #include "MessageHandler.hpp"
 #include "../commands/NickCmd.hpp"
 #include "../commands/PassCmd.hpp"
-#include "../commands/Privmsg.hpp"
+#include "../commands/PrivmsgCmd.hpp"
 #include "../commands/UserCmd.hpp"
 #include "../commands/Command.hpp"
 
@@ -28,7 +28,10 @@ void	MessageHandler::parseMessage() {
 	size_t positionToErase = msgToParse.find("\r\n");
 	if (positionToErase != std::string::npos) {
 		msgToParse.erase(positionToErase, 2);
-		// std::cout << "\\r\\n erased from:\n" << msgToParse << std::endl;
+	} else {
+		positionToErase = msgToParse.find("\n");
+		if (positionToErase != std::string::npos)
+			msgToParse.erase(positionToErase, 1);
 	}
 	while ((pos = msgToParse.find(delimiter)) != std::string::npos) {
 		if (msgToParse.find_first_not_of(" ") == 0) {
@@ -58,6 +61,8 @@ void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 	
 	Command *cmd = Command::createCmd(commandName, cmdWithArgs, fromUser);
 	if (cmd != NULL) {
+		cmd->setChannelsList(channelsList);
+		cmd->setUsersList(usersList);
 		cmd->execute();
 	}
 	// note: if (cmd == NULL) return error message to user
