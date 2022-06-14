@@ -117,7 +117,7 @@ void		ServerEngine::deleteNonactiveUsersChannels() {
 			if (kevent(kq, evSet, 2, NULL, 0, NULL) == -1)
 				return (printError("kevent() error 2"));
 			close(user->getFd()); // disconnects user from server
-			deleteUserFromChannels(user);
+			// deleteUserFromChannels(user); // note: need to modify
 			break;
 		}
 		//note: delete user;
