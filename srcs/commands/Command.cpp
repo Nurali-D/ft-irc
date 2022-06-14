@@ -3,7 +3,7 @@
 #include "PassCmd.hpp"
 #include "NickCmd.hpp"
 #include "UserCmd.hpp"
-// #include "PrivmsgCmd.hpp"
+#include "PrivmsgCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -16,9 +16,9 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg"}; // note: индекс команд 
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg"};
+// note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
-//
 
 
 // MARK: - Class Distructor
@@ -41,7 +41,7 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 	int arraySize = sizeof(cmdsArray) / sizeof(cmdsArray[0]);
 	const std::string *cmdIter = std::find(cmdsArray, cmdsArray + arraySize, cmdName);
 
-	index = (cmdIter != &cmdsArray[arraySize - 1]) ? std::distance(cmdsArray, cmdIter) : NULL;
+	index = (cmdIter != &cmdsArray[arraySize]) ? std::distance(cmdsArray, cmdIter) : -1;
 
 	switch (index) {
 		case PASS :
@@ -50,8 +50,10 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new NickCmd(args, user);
 		case USER :
 			return new UserCmd(args, user);
-		// case PRIVMSG :
-		// 	return new PrivmsgCmd(args, user);  // note: добавлять сюда все остальные команды
+		case PRIVMSG :
+			return new PrivmsgCmd(args, user);
+		
+		// note: добавлять сюда все остальные команды
 		// и в cmdsArray
 	}
 	return NULL;
