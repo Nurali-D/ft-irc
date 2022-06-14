@@ -20,6 +20,9 @@ void	PrivmsgCmd::execute(void) {
 	std::string target = args.at(1);
 	std::string msg = args.at(2);
 
+	if (msg[0] == ':')
+		msg.erase(0, 1);
+
 	if (target.at(0) == '#') {
 		if (!channelsList) { return ; }
 		
@@ -39,7 +42,7 @@ void	PrivmsgCmd::execute(void) {
 		std::vector<User*>::iterator it;
 		for (it = usersList->begin(); it != usersList->end(); ++it) {
 			if ((*it)->getNickname() == target) {
-				(*it)->appendMessage(msg);
+				(*it)->appendMessage(":" + user->getNickname() + "!" + user->getNickname() + "@" + user->getAddress() + " PRIVMSG " + target + " :" + msg);
 				return ;
 			}
 		}
