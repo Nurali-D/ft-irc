@@ -11,6 +11,11 @@ class JoinCmd : public Command
 		~JoinCmd(void);
 
 		void execute(void);
+	
+	private:
+		void 		addCreateMessage();
+		void 		addJoinMessage();
+		std::string	getChannelUsers(std::string &channelName);
 };
 
 #endif
