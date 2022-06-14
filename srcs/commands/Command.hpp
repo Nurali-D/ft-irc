@@ -12,7 +12,8 @@ class Command
 			PASS,
 			NICK,
 			USER,
-			PRIVMSG
+			PRIVMSG,
+			PING
 		};
 
 	protected:

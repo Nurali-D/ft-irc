@@ -4,6 +4,7 @@
 #include "NickCmd.hpp"
 #include "UserCmd.hpp"
 #include "PrivmsgCmd.hpp"
+#include "PingCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -16,7 +17,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg"};
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "ping"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 
@@ -52,7 +53,8 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new UserCmd(args, user);
 		case PRIVMSG :
 			return new PrivmsgCmd(args, user);
-		
+		case PING :
+			return new PingCmd(args, user);
 		// note: добавлять сюда все остальные команды
 		// и в cmdsArray
 	}
