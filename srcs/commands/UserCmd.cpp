@@ -19,8 +19,7 @@ void	UserCmd::execute(void) {
 
 	user->setUsername(args.at(1));
 	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
-		user->appendMessage(":server " + std::string(RPL_WELCOME) + " "
-		+ user->getNickname() + " :Welcome to the Internet Relay Network "
-		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress());
+		addWelcomeMessage();
+
 	}
 }

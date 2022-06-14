@@ -22,6 +22,7 @@ class Command
 
 		std::vector<User*> *usersList;
 		std::vector<Channel*> *channelsList;
+		void addWelcomeMessage();
 
 	private:
 		static const std::string cmdsArray[];
