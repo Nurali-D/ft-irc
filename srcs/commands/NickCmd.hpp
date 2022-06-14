@@ -11,7 +11,7 @@ class NickCmd : public Command
 		NickCmd(std::vector<std::string> &args, User *user);
 		~NickCmd(void);
 
-		void execute();
+		void execute(void);
 };
 
 #endif

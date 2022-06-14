@@ -33,7 +33,7 @@ void	PrivmsgCmd::execute(void) {
 				for (uit = (*it)->getUsers().begin(); uit != (*it)->getUsers().end(); ++uit) {
 					if ((*uit)->getNickname() == user->getNickname())
 						continue;
-					(*uit)->appendMessage(msg);
+					(*uit)->appendMessage(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg);
 				}
 				return ;
 			}

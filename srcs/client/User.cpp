@@ -24,6 +24,10 @@ void					User::appendMessage(std::string message) {
 	this->messages.push(message);
 }
 
+void					User::appendChannel(Channel *channel) {
+	this->joinedChannels.push_back(channel);
+}
+
 const std::string		&User::getNickname() {
 	return (this->nickname);
 }

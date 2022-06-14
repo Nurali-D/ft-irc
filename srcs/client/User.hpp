@@ -55,6 +55,7 @@ class User
 		int						getFd();
 		// MARK: - methods
 		void					appendMessage(std::string message);
+		void					appendChannel(Channel *channel);
 		bool					isNickAndUsername();
 		
 };
