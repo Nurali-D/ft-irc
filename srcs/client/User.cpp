@@ -50,6 +50,10 @@ std::stack<std::string>	&User::getMessages() {
 	return (this->messages);
 }
 
+int						User::getFd() {
+	return fd;
+}
+
 void					User::setState(User::UserState state) {
 	this->state = state;
 }

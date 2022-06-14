@@ -21,6 +21,6 @@ void	NickCmd::execute() {
 	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
 		user->appendMessage(":server " + std::string(RPL_WELCOME) + " "
 		+ user->getNickname() + " :Welcome to the Internet Relay Network "
-		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress()); // note: message + "\r\n", клиент должен знать конец сообщения 
+		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress());
 	}
 }

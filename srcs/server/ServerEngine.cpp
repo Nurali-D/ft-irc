@@ -73,14 +73,14 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		msgHandler->setMsgToParse(readedMsg);
 		msgHandler->parseMessage();
 		readedMsg = "";
-		std::cerr << "nickname: " << user->getNickname()
-			<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
+		// std::cerr << "nickname: " << user->getNickname()
+		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
-	// for (size_t i = 0; i < usersList.size(); ++i) {
-	// 	User *u = usersList.at(i);
-	// 	std::cout << "user " << i << u << " nickname: " << u->getNickname()
-	// 		<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
-	// }
+	for (size_t i = 0; i < usersList.size(); ++i) {
+		User *u = usersList.at(i);
+		std::cout << "user " << i << " nickname: " << u->getNickname()
+			<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
+	}
 }
 
 void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
@@ -90,20 +90,59 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	User *user = static_cast<User*>(eventList[i].udata);
 	if (!user->getMessages().empty()) {
-		// User *user1 = usersList.front();
-		// std::stack<std::string> userStack = user1->getMessages();
-		// std::cout << "stack size before sending message = " << userStack.size() << std::endl;
 		std::string msg = user->getMessages().top();
+		msg += "\r\n";
 		user->getMessages().pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
 		if (sended == -1) {
 			printError("send() error");
 		}
-		// userStack = user1->getMessages();
-		// std::cout << "stack size after sending message = " << userStack.size() << std::endl;
 	}
 	
 	
+}
+
+void		ServerEngine::deleteNonactiveUsersChannels() {
+	User::UserState deactiveState = User::DEACTIVE;
+	User *user = NULL;
+	struct kevent evSet[2];
+
+	for (size_t i = 0; i < usersList.size(); ++i) {
+		user = usersList.at(i);
+		if (user->getState() == deactiveState) {
+			usersList.erase(usersList.begin() + i);
+			std::cout << "user deleted" << " fd = " << user->getFd() << std::endl;
+			EV_SET(&evSet[0], user->getFd(), EVFILT_READ, EV_DELETE, 0, 0, NULL); 
+			EV_SET(&evSet[1], user->getFd(), EVFILT_WRITE, EV_DELETE, 0, 0, NULL);
+			if (kevent(kq, evSet, 2, NULL, 0, NULL) == -1)
+				return (printError("kevent() error 2"));
+			close(user->getFd()); // disconnects user from server
+			deleteUserFromChannels(user);
+			break;
+		}
+		//note: delete user;
+	}
+
+	
+}
+
+void		ServerEngine::deleteUserFromChannels(User *user) {
+	for (size_t i = 0; i < channelsList.size(); ++i) {
+		Channel *channel = channelsList.at(i);
+		std::vector<User*> joinedUsers = channel->getUsers();
+		for (size_t j = 0; j < joinedUsers.size(); ++j) {
+			User *joinedUser = joinedUsers.at(j);
+			if (joinedUser == user) {
+				joinedUsers.erase(joinedUsers.begin() + j);
+				break;
+			}
+		}
+	}
+	std::remove_if(channelsList.begin(), channelsList.end(), ServerEngine::channelIsEmpty);
+}
+
+bool	ServerEngine::channelIsEmpty(Channel *channel) {
+	return channel->getUsers().empty();
 }
 
 void	ServerEngine::watchLoop()
@@ -113,8 +152,8 @@ void	ServerEngine::watchLoop()
 
 	while (true)
 	{
+		deleteNonactiveUsersChannels();
 		eventNumber = kevent(kq, NULL, 0, eventList, 1024, NULL);
-
 		if (eventNumber < 1)
 		{
 			std::cerr << std::strerror(errno) << std::endl;

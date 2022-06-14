@@ -51,8 +51,8 @@ class User
 		std::stack<std::string>	&getMessages();
 		const std::string		getAddress();
 		const User::UserState	&getState();	
-		MessageHandler			*getMsgHandler();		
-
+		MessageHandler			*getMsgHandler();	
+		int						getFd();
 		// MARK: - methods
 		void					appendMessage(std::string message);
 		bool					isNickAndUsername();
