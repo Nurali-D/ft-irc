@@ -5,6 +5,7 @@
 #include "UserCmd.hpp"
 #include "PrivmsgCmd.hpp"
 #include "JoinCmd.hpp"
+#include "PingCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -17,7 +18,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join"};
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 
@@ -55,8 +56,23 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new PrivmsgCmd(args, user);
 		case JOIN :
 			return new JoinCmd(args, user);
+		case PING :
+			return new PingCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray
 	}
 	return NULL;
+}
+
+void Command::addWelcomeMessage() {
+
+	user->appendMessage(":server " + std::string(RPL_ENDOFMOTD) + " "
+		+ user->getNickname() + " ::End of /MOTD command.");
+	user->appendMessage(":server " + std::string(RPL_MOTD) + " "
+		+ user->getNickname() + " :- EASY MESSENGER by bbetsey & ltulune -");
+	user->appendMessage(":server " + std::string(RPL_MOTDSTART) + " "
+		+ user->getNickname() + " :- Message of the Day -");
+	user->appendMessage(":server 00" + std::string(RPL_WELCOME) + " "
+		+ user->getNickname() + " :Welcome to the Internet Relay Network "
+		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress());
 }

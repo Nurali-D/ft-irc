@@ -64,16 +64,22 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
 	std::cout << ">> " + msg << std::endl;
 	readedMsg += msg;
-	if (readedMsg.find("\n", 0) != std::string::npos) {
+	size_t pos = readedMsg.find("\r\n", 0);
+	if (pos != std::string::npos) {
 		User *user = static_cast<User*>(eventList[i].udata);
 		MessageHandler *msgHandler = user->getMsgHandler();
 		if (msgHandler == NULL) {
 			msgHandler = new MessageHandler(user, &usersList, &channelsList, 
 				serverSocket.getPassword());
 		}
-		// std::cout << "received message :\n" << readedMsg << std::endl;
-		msgHandler->setMsgToParse(readedMsg);
-		msgHandler->parseMessage();
+		std::cout << "received message :\n" << readedMsg << std::endl;
+		while (pos != std::string::npos) {
+			msgHandler->setMsgToParse(readedMsg.substr(0, pos + 2));
+			msgHandler->parseMessage();
+			readedMsg.erase(0, pos + 2);
+			pos = readedMsg.find("\r\n", 0);
+		}
+		
 		readedMsg = "";
 		// std::cerr << "nickname: " << user->getNickname()
 		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
