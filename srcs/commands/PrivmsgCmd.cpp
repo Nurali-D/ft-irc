@@ -24,27 +24,25 @@ void	PrivmsgCmd::execute(void) {
 		msg.erase(0, 1);
 
 	if (target.at(0) == '#') {
-		if (!channelsList) { return ; }
 		
-		std::vector<Channel*>::iterator it;
-		for (it = channelsList->begin(); it != channelsList->end(); ++it) {
-			if ((*it)->getName() == target) {
-				std::vector<User*>::iterator uit;
-				for (uit = (*it)->getUsers().begin(); uit != (*it)->getUsers().end(); ++uit) {
-					if ((*uit)->getNickname() == user->getNickname())
-						continue;
-					(*uit)->appendMessage(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg);
-				}
-				return ;
-			}
+		Channel *channel = channelsList->getChannel(target);
+		if (channel) {
+			if (channel->isMember(target))
+				channel->mailing(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg, user);
+			else
+				user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)
+				+ " " + target + ": You're not member of this channel");
+		} else {
+			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + target + " : No such channel");
 		}
+
 	} else {
-		std::vector<User*>::iterator it;
-		for (it = usersList->begin(); it != usersList->end(); ++it) {
-			if ((*it)->getNickname() == target) {
-				(*it)->appendMessage(":" + user->getNickname() + "!" + user->getNickname() + "@" + user->getAddress() + " PRIVMSG " + target + " :" + msg);
-				return ;
-			}
+		User *targetUser = usersList->getUser(target);
+		if (targetUser) {
+			targetUser->appendMessage(":" + user->getNickname() + "!" + user->getNickname()
+			+ "@" + user->getAddress() + " PRIVMSG " + target + " :" + msg);
+		} else {
+			user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + target + " : No such nick/channel");
 		}
 	}
 }

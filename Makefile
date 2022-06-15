@@ -18,13 +18,16 @@ SRCS = srcs/main.cpp \
 	srcs/client/Channel.cpp \
 	srcs/client/User.cpp \
 	srcs/client/MessageHandler.cpp \
+	srcs/client/UsersList.cpp \
+	srcs/client/ChannelsList.cpp \
 	srcs/commands/Command.cpp \
 	srcs/commands/PassCmd.cpp \
 	srcs/commands/NickCmd.cpp \
 	srcs/commands/UserCmd.cpp \
 	srcs/commands/PrivmsgCmd.cpp \
 	srcs/commands/JoinCmd.cpp \
-	srcs/commands/PingCmd.cpp
+	srcs/commands/PingCmd.cpp \
+	srcs/commands/KickCmd.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

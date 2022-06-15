@@ -5,8 +5,8 @@
 #include "../commands/UserCmd.hpp"
 #include "../commands/Command.hpp"
 
-MessageHandler::MessageHandler(User *fromUser, std::vector<User*> *usersList, 
-		std::vector<Channel*> *channelsList, std::string password) 
+MessageHandler::MessageHandler(User *fromUser, UsersList *usersList, 
+		ChannelsList *channelsList, std::string password) 
 		: fromUser(fromUser), 
 		usersList(usersList), 
 		channelsList(channelsList) {

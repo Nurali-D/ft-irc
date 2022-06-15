@@ -3,6 +3,8 @@
 #include "../client/User.hpp"
 #include "../client/Channel.hpp"
 #include "../client/MessageHandler.hpp"
+#include "../client/UsersList.hpp"
+#include "../client/ChannelsList.hpp"
 
 #ifndef SERVERENGINE_HPP
 # define SERVERENGINE_HPP
@@ -14,10 +16,10 @@ public:
 	~ServerEngine();
 
 private:
-	int						kq;
-	ServerSocket			serverSocket;
-	std::vector<User*>		usersList;
-	std::vector<Channel*>	channelsList;
+	int				kq;
+	ServerSocket	serverSocket;
+	UsersList		usersList;
+	ChannelsList	channelsList;
 
 	void		makeQueue();
 	void		watchLoop();

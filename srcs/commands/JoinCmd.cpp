@@ -20,24 +20,14 @@ void	JoinCmd::execute(void) {
 	if (args[1][0] != '#')
 		return ;
 
-	if (channelsList) {
-		std::vector<Channel*>::iterator it;
-		for (it = channelsList->begin(); it != channelsList->end(); ++it) {
-			std::cout << (*it)->getName() << std::endl;
-			if ((*it)->getName() == args[1]) {
-				(*it)->addUser(user);
-				user->appendChannel(*it);
-				addJoinMessage();
-				return;
-			}
-		}
+	Channel *channel = channelsList->getChannel(args[1]);
+	if (channel) {
+		channel->addUser(user);
+		addJoinMessage();
+		return ;
 	}
-	Channel *channel = new Channel(user, args[1]);
-	channelsList->push_back(channel);
-	channel->addUser(user);
-	user->appendChannel(channel);
+	channelsList->addChannel(user, args[1]);
 	addCreateMessage();
-	
 }
 
 void JoinCmd::addCreateMessage() {
@@ -69,15 +59,8 @@ void JoinCmd::addJoinMessage() {
 }
 
 std::string JoinCmd::getChannelUsers(std::string &channelName) {
-	Channel *channel = NULL;
-	size_t size = channelsList->size();
+	Channel *channel = channelsList->getChannel(channelName);
 
-	for (size_t i = 0; i < size; ++i) {
-		channel = channelsList->at(i);
-		if (channelName == channel->getName()) {
-			break ;
-		}
-	}
 	std::vector<User*> chUsers = channel->getUsers();
 	User *chop = channel->getChannelOperator();
 	std::string chopName = chop->getNickname();

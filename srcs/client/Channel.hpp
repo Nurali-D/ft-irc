@@ -23,9 +23,14 @@ class Channel
 
 		std::string			getName() const;
 		std::vector<User*>	&getUsers();
+		User				*getUser(std::string nickname);
 		User				*getChannelOperator();
 		void				setChannelOperator();
 		void				addUser(User *newUser);
+		bool				removeUser(std::string nickname);
+		bool				isMember(std::string nickname);
+		void				eraseNullUsers(void);
+		void				mailing(std::string msg, User *fromUser);
 
 };
 

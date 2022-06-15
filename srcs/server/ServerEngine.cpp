@@ -7,8 +7,7 @@ ServerEngine::ServerEngine(ServerSocket &serverSocket) {
 
 ServerEngine::~ServerEngine() {}
 
-void	ServerEngine::printError(const std::string &comment)
-{
+void	ServerEngine::printError(const std::string &comment) {
 	std::cerr << comment << '\n';
 }
 
@@ -28,7 +27,7 @@ void	ServerEngine::acceptNewClient(int i, struct kevent *eventList)
 	int opt = 1;
 	setsockopt(newEventFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 	User *user = new User(newEventFd, addr);
-	usersList.push_back(user);
+	usersList.addUser(user);
 	EV_SET(&evSet[0], newEventFd, EVFILT_READ, EV_ADD, 0, 0, static_cast<void*>(user));
 	EV_SET(&evSet[1], newEventFd, EVFILT_WRITE, EV_ADD, 0, 0, static_cast<void*>(user));
 	if (kevent(kq, evSet, 2, NULL, 0, NULL) == -1)
@@ -113,45 +112,6 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 	
 }
 
-void		ServerEngine::deleteNonactiveUsersChannels() {
-	User::UserState deactiveState = User::DEACTIVE;
-	User *user = NULL;
-	struct kevent evSet[2];
-
-	for (size_t i = 0; i < usersList.size(); ++i) {
-		user = usersList.at(i);
-		if (user->getState() == deactiveState && user->getMessages().empty()) {
-			usersList.erase(usersList.begin() + i);
-			std::cout << "user deleted" << " fd = " << user->getFd() << std::endl;
-			EV_SET(&evSet[0], user->getFd(), EVFILT_READ, EV_DELETE, 0, 0, NULL); 
-			EV_SET(&evSet[1], user->getFd(), EVFILT_WRITE, EV_DELETE, 0, 0, NULL);
-			if (kevent(kq, evSet, 2, NULL, 0, NULL) == -1)
-				return (printError("kevent() error 2"));
-			close(user->getFd()); // disconnects user from server
-			// deleteUserFromChannels(user); // note: need to modify
-			break;
-		}
-		// delete user;
-	}
-
-	
-}
-
-void		ServerEngine::deleteUserFromChannels(User *user) {
-	for (size_t i = 0; i < channelsList.size(); ++i) {
-		Channel *channel = channelsList.at(i);
-		std::vector<User*> joinedUsers = channel->getUsers();
-		for (size_t j = 0; j < joinedUsers.size(); ++j) {
-			User *joinedUser = joinedUsers.at(j);
-			if (joinedUser == user) {
-				joinedUsers.erase(joinedUsers.begin() + j);
-				break;
-			}
-		}
-	}
-	std::remove_if(channelsList.begin(), channelsList.end(), ServerEngine::channelIsEmpty);
-}
-
 bool	ServerEngine::channelIsEmpty(Channel *channel) {
 	return channel->getUsers().empty();
 }
@@ -163,7 +123,6 @@ void	ServerEngine::watchLoop()
 
 	while (true)
 	{
-		deleteNonactiveUsersChannels();
 		eventNumber = kevent(kq, NULL, 0, eventList, 1024, NULL);
 		if (eventNumber < 1)
 		{
@@ -179,6 +138,8 @@ void	ServerEngine::watchLoop()
 			else if (eventList[i].filter == EVFILT_WRITE)
 				writeToClientSocket(i, eventList);
 		}
+		usersList.removeNonactiveUsers(kq);
+		channelsList.eraseNullUsers();
 	}
 }
 

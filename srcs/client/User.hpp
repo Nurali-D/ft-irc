@@ -7,9 +7,12 @@
 
 #include "../headers/libraryHeaders.hpp"
 
+class Channel;
 class User;
+class ChannelsList;
 
 #include "MessageHandler.hpp"
+
 
 class User
 {
@@ -38,6 +41,8 @@ class User
 		User(int fd, struct sockaddr_in address);
 		~User();
 
+		std::string				readedMsg;
+
 		// MARK: - setters
 		void					setNickname(std::string nickname);
 		void					setUsername(std::string username);
@@ -57,8 +62,7 @@ class User
 		void					appendMessage(std::string message);
 		void					appendChannel(Channel *channel);
 		bool					isNickAndUsername();
-
-		std::string				readedMsg;
+		bool					isOperator(std::string channelName);
 		
 };
 
