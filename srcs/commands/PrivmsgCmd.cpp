@@ -24,7 +24,6 @@ void	PrivmsgCmd::execute(void) {
 		msg.erase(0, 1);
 
 	if (target.at(0) == '#') {
-		if (!channelsList) { return ; }
 		
 		Channel *channel = channelsList->getChannel(target);
 		if (channel) {
@@ -33,14 +32,17 @@ void	PrivmsgCmd::execute(void) {
 			else
 				user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)
 				+ " " + target + ": You're not member of this channel");
+		} else {
+			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + target + " : No such channel");
 		}
-		// note: добавить обработку ошибки несуществующего канала
 
 	} else {
 		User *targetUser = usersList->getUser(target);
-		if (targetUser)
+		if (targetUser) {
 			targetUser->appendMessage(":" + user->getNickname() + "!" + user->getNickname()
 			+ "@" + user->getAddress() + " PRIVMSG " + target + " :" + msg);
-		// note: добавить обработку ошибки несуществующего пользователя
+		} else {
+			user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + target + " : No such nick/channel");
+		}
 	}
 }
