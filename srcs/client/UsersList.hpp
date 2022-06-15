@@ -2,6 +2,9 @@
 #define USERSLIST_HPP
 
 #include "../headers/libraryHeaders.hpp"
+
+class UsersList;
+
 #include "User.hpp"
 
 
@@ -16,6 +19,7 @@ class UsersList
 
 		void	addUser(User *user);
 		void	removeUser(std::string nickname);
+		void	removeNonactiveUsers(int kq);
 		User	*getUser(std::string nickname);
 };
 

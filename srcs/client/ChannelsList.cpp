@@ -15,6 +15,7 @@ ChannelsList::~ChannelsList(void) {}
 
 void	ChannelsList::addChannel(User *userCreator, std::string channelName) {
 	Channel *newChannel = new Channel(userCreator, channelName);
+	userCreator->appendChannel(newChannel);
 	channels.push_back(newChannel);
 }
 
@@ -35,4 +36,10 @@ Channel	*ChannelsList::getChannel(std::string channelName) {
 			return (*it);
 	}
 	return (NULL);
+}
+
+void	ChannelsList::eraseNullUsers(void) {
+	std::vector<Channel*>::iterator it;
+	for (it = channels.begin(); it != channels.end(); ++it)
+		(*it)->eraseNullUsers();
 }

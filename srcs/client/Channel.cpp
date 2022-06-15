@@ -3,6 +3,7 @@
 Channel::Channel(User *userCreator, std::string channelName) {
 	channelOperator = userCreator;
 	name = channelName;
+	addUser(userCreator);
 }
 
 Channel::~Channel() {}
@@ -25,4 +26,21 @@ void	Channel::setChannelOperator() {
 
 void	Channel::addUser(User *newUser) {
 	users.push_back(newUser);
+}
+
+void	Channel::eraseNullUsers(void) {
+	std::vector<User*>::iterator it;
+	for (it = users.begin(); it != users.end(); ++it) {
+		if (!(*it))
+			users.erase(it);
+	}
+}
+
+void	Channel::mailing(std::string msg, User *fromUser) {
+	std::vector<User*>::iterator it;
+	for (it = users.begin(); it != users.end(); ++it) {
+		if ((*it)->getNickname() == fromUser->getNickname())
+			continue;
+		(*it)->appendMessage(msg);
+	}
 }

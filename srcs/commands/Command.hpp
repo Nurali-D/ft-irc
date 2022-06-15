@@ -4,6 +4,8 @@
 #include "../headers/libraryHeaders.hpp"
 #include "../client/Channel.hpp"
 #include "../client/User.hpp"
+#include "../client/UsersList.hpp"
+#include "../client/ChannelsList.hpp"
 
 class Command
 {
@@ -23,9 +25,9 @@ class Command
 		std::vector<std::string> &args;
 		User *user;
 
-		std::vector<User*> *usersList;
-		std::vector<Channel*> *channelsList;
-		void addWelcomeMessage();
+		UsersList		*usersList;
+		ChannelsList	*channelsList;
+		void 			addWelcomeMessage();
 
 	private:
 		static const std::string cmdsArray[];
@@ -35,8 +37,8 @@ class Command
 		virtual ~Command(void);
 
 		virtual void execute() = 0;
-		void setUsersList(std::vector<User*> *usersList);
-		void setChannelsList(std::vector<Channel*> *channelsList);
+		void setUsersList(UsersList *usersList);
+		void setChannelsList(ChannelsList *channelsList);
 		static Command *createCmd(std::string &cmdName, std::vector<std::string> &args, User *user);
 };
 

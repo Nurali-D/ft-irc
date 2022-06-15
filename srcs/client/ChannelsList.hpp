@@ -18,6 +18,8 @@ class ChannelsList
 		void	removeChannel(std::string channelName);
 		Channel	*getChannel(std::string channelName);
 
+		void	eraseNullUsers(void);
+
 };
 
 #endif

@@ -26,6 +26,8 @@ class Channel
 		User				*getChannelOperator();
 		void				setChannelOperator();
 		void				addUser(User *newUser);
+		void				eraseNullUsers(void);
+		void				mailing(std::string msg, User *fromUser);
 
 };
 

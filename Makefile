@@ -18,6 +18,8 @@ SRCS = srcs/main.cpp \
 	srcs/client/Channel.cpp \
 	srcs/client/User.cpp \
 	srcs/client/MessageHandler.cpp \
+	srcs/client/UsersList.cpp \
+	srcs/client/ChannelsList.cpp \
 	srcs/commands/Command.cpp \
 	srcs/commands/PassCmd.cpp \
 	srcs/commands/NickCmd.cpp \

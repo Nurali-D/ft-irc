@@ -30,11 +30,11 @@ Command::~Command(void) {}
 
 // MARK: - Class Methods
 
-void Command::setUsersList(std::vector<User*> *usersList) {
+void Command::setUsersList(UsersList *usersList) {
 	this->usersList = usersList;
 }
 
-void Command::setChannelsList(std::vector<Channel*> *channelsList) {
+void Command::setChannelsList(ChannelsList *channelsList) {
 	this->channelsList = channelsList;
 }
 
