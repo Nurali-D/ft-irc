@@ -36,8 +36,8 @@ class MessageHandler
 			std::vector<Channel*> *channelsList, std::string password);
 		~MessageHandler();
 
-		void	parseMessage();
-		void	setMsgToParse(std::string msgToParse);
+		void		parseMessage();
+		void		setMsgToParse(std::string msgToParse);
 };
 
 #endif

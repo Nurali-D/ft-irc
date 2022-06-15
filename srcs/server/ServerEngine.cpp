@@ -63,24 +63,26 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
 	std::cout << ">> " + msg << std::endl;
-	readedMsg += msg;
-	size_t pos = readedMsg.find("\r\n", 0);
+	User *user = static_cast<User*>(eventList[i].udata);
+
+	user->readedMsg += msg;
+	size_t pos = user->readedMsg.find("\r\n", 0);
 	if (pos != std::string::npos) {
-		User *user = static_cast<User*>(eventList[i].udata);
+		
 		MessageHandler *msgHandler = user->getMsgHandler();
 		if (msgHandler == NULL) {
 			msgHandler = new MessageHandler(user, &usersList, &channelsList, 
 				serverSocket.getPassword());
 		}
-		std::cout << "received message :\n" << readedMsg << std::endl;
+		std::cout << "received message :\n" << user->readedMsg << std::endl;
 		while (pos != std::string::npos) {
-			msgHandler->setMsgToParse(readedMsg.substr(0, pos + 2));
+			msgHandler->setMsgToParse(user->readedMsg.substr(0, pos + 2));
 			msgHandler->parseMessage();
-			readedMsg.erase(0, pos + 2);
-			pos = readedMsg.find("\r\n", 0);
+			user->readedMsg.erase(0, pos + 2);
+			pos = user->readedMsg.find("\r\n", 0);
 		}
 		
-		readedMsg = "";
+		user->readedMsg = "";
 		// std::cerr << "nickname: " << user->getNickname()
 		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
@@ -117,7 +119,7 @@ void		ServerEngine::deleteNonactiveUsersChannels() {
 
 	for (size_t i = 0; i < usersList.size(); ++i) {
 		user = usersList.at(i);
-		if (user->getState() == deactiveState) {
+		if (user->getState() == deactiveState && user->getMessages().empty()) {
 			usersList.erase(usersList.begin() + i);
 			std::cout << "user deleted" << " fd = " << user->getFd() << std::endl;
 			EV_SET(&evSet[0], user->getFd(), EVFILT_READ, EV_DELETE, 0, 0, NULL); 

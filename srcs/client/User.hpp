@@ -57,6 +57,8 @@ class User
 		void					appendMessage(std::string message);
 		void					appendChannel(Channel *channel);
 		bool					isNickAndUsername();
+
+		std::string				readedMsg;
 		
 };
 

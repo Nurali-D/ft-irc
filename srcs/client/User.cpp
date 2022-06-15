@@ -4,9 +4,12 @@ User::User(int fd, struct sockaddr_in address) {
 	this->fd = fd;
 	this->address = address;
 	this->state = LOGGING;
+	this->readedMsg = "";
 }
 
-User::~User() {}
+User::~User() {
+	delete msgHandler;
+}
 
 void					User::setNickname(std::string nickname) {
 	this->nickname = nickname;
