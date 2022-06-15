@@ -1,7 +1,10 @@
 #include "ClientEngine.hpp"
 
 ClientEngine::ClientEngine(ClientSocket &cs) : cs(cs) {
-
+	sendMsgs.push("nick SuperBot");
+	sendMsgs.push("user SuperBot");
+	sendMsgs.push("pass " + cs.getPassword());
+	makeQueue();
 }
 
 ClientEngine::~ClientEngine() {}
@@ -56,10 +59,12 @@ void	ClientEngine::readFromClientSocket(int i, struct kevent *eventList)
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
 	std::cout << ">> " + msg << std::endl;
 	readedMsg += msg;
-	size_t pos = readedMsg.find("\r\n", 0);
-	if (pos != std::string::npos) {
-		// message parser
-	}
+	std::cout << msg << std::endl;
+	// size_t pos = readedMsg.find("\r\n", 0);
+	// if (pos != std::string::npos) {
+	// 	//parser
+	// }
+	sendMsgs.push(msg + " ------>got it");
 	
 }
 

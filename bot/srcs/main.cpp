@@ -1,4 +1,5 @@
 #include "ClientSocket.hpp"
+#include "ClientEngine.hpp"
 
 bool portIsNumber(char *str);
 
@@ -16,11 +17,7 @@ int main(int argc, char *argv[]) {
 	const char* ip = str.c_str();
 	std::string password(argv[2]);
 	ClientSocket cs = ClientSocket(*ip, std::atoi(argv[1]), password);
-
-	while (true) {
-		
-	}
-
+	ClientEngine ce = ClientEngine(cs);
 }
 
 bool portIsNumber(char *str) {
