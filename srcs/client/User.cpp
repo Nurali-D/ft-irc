@@ -72,3 +72,12 @@ void					User::setUsername(std::string username) {
 bool	User::isNickAndUsername() {
 	return (!this->nickname.empty() && !this->username.empty());
 }
+
+bool	User::isOperator(std::string channelName) {
+	std::vector<Channel*>::iterator it;
+	for (it = joinedChannels.begin(); it != joinedChannels.end(); ++it) {
+		if ((*it)->getName() == channelName && (*it)->getChannelOperator()->getNickname() == nickname)
+			return true;
+	}
+	return false;
+}
