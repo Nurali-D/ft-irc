@@ -18,7 +18,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping"};
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", "kick"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 

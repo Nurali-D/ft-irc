@@ -14,7 +14,8 @@ class Command
 			USER,
 			PRIVMSG,
 			JOIN,
-			PING
+			PING,
+			KICK
 		};
 
 	protected:
