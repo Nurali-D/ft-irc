@@ -8,7 +8,7 @@
 # include <arpa/inet.h>
 #if defined(__linux__)
 	# include </usr/include/kqueue/sys/event.h> //Linux
-#elif
+#else 
 	# include <sys/event.h> //Macos
 #endif
 # include <unistd.h>
