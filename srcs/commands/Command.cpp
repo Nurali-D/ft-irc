@@ -6,6 +6,7 @@
 #include "PrivmsgCmd.hpp"
 #include "JoinCmd.hpp"
 #include "PingCmd.hpp"
+#include "KickCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -58,6 +59,8 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new JoinCmd(args, user);
 		case PING :
 			return new PingCmd(args, user);
+		case KICK :
+			return new KickCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray
 	}

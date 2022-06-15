@@ -27,8 +27,13 @@ void	PrivmsgCmd::execute(void) {
 		if (!channelsList) { return ; }
 		
 		Channel *channel = channelsList->getChannel(target);
-		if (channel)
-			channel->mailing(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg, user);
+		if (channel) {
+			if (channel->isMember(target))
+				channel->mailing(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg, user);
+			else
+				user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)
+				+ " " + target + ": You're not member of this channel");
+		}
 		// note: добавить обработку ошибки несуществующего канала
 
 	} else {
