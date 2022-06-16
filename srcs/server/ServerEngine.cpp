@@ -81,8 +81,9 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		// std::cerr << "nickname: " << user->getNickname()
 		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
-	for (size_t i = 0; i < usersList.size(); ++i) {
-		User *u = usersList.at(i);
+	std::vector<User*> users = usersList.getUsers();
+	for (size_t i = 0; i < users.size(); ++i) {
+		User *u = users.at(i);
 		std::cout << "user " << i << " nickname: " << u->getNickname()
 			<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
 	}

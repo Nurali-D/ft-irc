@@ -7,6 +7,8 @@
 #include "JoinCmd.hpp"
 #include "PingCmd.hpp"
 #include "KickCmd.hpp"
+#include "NoticeCmd.hpp"
+#include "TopicCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -19,7 +21,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", "kick"};
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", "kick", "notice", "topic"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 
@@ -61,6 +63,10 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new PingCmd(args, user);
 		case KICK :
 			return new KickCmd(args, user);
+		case NOTICE :
+			return new NoticeCmd(args, user);
+		case TOPIC :
+			return new TopicCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray
 	}

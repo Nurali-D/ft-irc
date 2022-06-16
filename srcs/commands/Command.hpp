@@ -17,7 +17,9 @@ class Command
 			PRIVMSG,
 			JOIN,
 			PING,
-			KICK
+			KICK,
+			NOTICE,
+			TOPIC
 		};
 
 	protected:
