@@ -40,9 +40,10 @@ void	Channel::addUser(User *newUser) {
 bool	Channel::removeUser(std::string nickname) {
 	std::vector<User*>::iterator it;
 	for (it = users.begin(); it != users.end(); ++it) {
-		if ((*it)->getNickname() == nickname)
+		if ((*it)->getNickname() == nickname) {
 			users.erase(it);
 			return true;
+		}
 	}
 	return false;
 }

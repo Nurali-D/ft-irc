@@ -29,9 +29,6 @@ private:
 	void		readFromClientSocket(int i, struct kevent *eventList);
 	void		writeToClientSocket(int i, struct kevent *eventList);
 	void		printError(const std::string &comment);
-	void		deleteNonactiveUsersChannels();
-	void		deleteUserFromChannels(User *user);
-	static bool	channelIsEmpty(Channel *channel);
 };
 
 #endif

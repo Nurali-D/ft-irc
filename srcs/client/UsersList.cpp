@@ -58,3 +58,11 @@ void	UsersList::removeNonactiveUsers(int kq) {
 		}
 	}
 }
+
+size_t	UsersList::size() const {
+	return users.size();
+}
+
+User	*UsersList::at(int i) {
+	return users.at(i);
+}

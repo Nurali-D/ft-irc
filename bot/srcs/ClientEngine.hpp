@@ -1,5 +1,5 @@
 #include "ClientSocket.hpp"
-#include <stack>
+#include <queue>
 
 #ifndef CLIENTENGINE_HPP
 # define CLIENTENGINE_HPP
@@ -14,7 +14,7 @@ private:
 	int						kq;
 	ClientSocket			cs;
 	std::string				readedMsg;
-	std::stack<std::string> sendMsgs;
+	std::queue<std::string> sendMsgs;
 
 	void		makeQueue();
 	void		watchLoop();

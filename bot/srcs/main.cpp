@@ -28,15 +28,3 @@ bool portIsNumber(char *str) {
 	}
 	return true;
 }
-
-
-
-	// listenSocketFd = socket(AF_INET, SOCK_STREAM, 0);
-	// if (listenSocketFd == -1)
-	// 	throw std::runtime_error("socket() error");
-	// memset(&listenSocketAddr, 0, sizeof(listenSocketAddr));
-	// int opt = 1;
-	// setsockopt(listenSocketFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-	// listenSocketAddr.sin_family = AF_INET;
-	// listenSocketAddr.sin_port = htons(port);
-	// listenSocketAddr.sin_addr.s_addr = inet_addr(&ip);

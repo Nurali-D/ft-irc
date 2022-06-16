@@ -27,7 +27,7 @@ void PassCmd::execute()
 		receivedPass = receivedPass.substr(1);
 	}
 	if (receivedPass != args.at(2)) {
-		std::cout << "We are here" << std::endl;
+		// std::cout << "We are here" << std::endl;
 		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " :Password incorrect!");
 		user->appendMessage(":server KILL " + user->getAddress() + " :Bad password");
 		user->setState(User::DEACTIVE);

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <stack>
+#include <queue>
 
 #include "../headers/libraryHeaders.hpp"
 
@@ -33,7 +33,7 @@ class User
 		std::string				hostname;
 		std::string				servername;
 		std::string				realname;
-		std::stack<std::string>	messages;
+		std::queue<std::string>	messages;
 		MessageHandler			*msgHandler;
 		std::vector<Channel*>	joinedChannels;
 

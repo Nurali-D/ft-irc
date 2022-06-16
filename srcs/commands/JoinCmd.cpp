@@ -31,31 +31,25 @@ void	JoinCmd::execute(void) {
 }
 
 void JoinCmd::addCreateMessage() {
-
-	user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + 
-		" " + args.at(1) + " :End of /NAMES list.");
-
+	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
+		"@" + user->getHostname() + " JOIN :" + args.at(1));
+	user->appendMessage(":server MODE " + args.at(1) + " +nt");
 	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 
 		" " + user->getNickname() + " = " + args.at(1) + 
 		" :@" + user->getNickname());
-
-	user->appendMessage(":server MODE " + args.at(1) + " +nt");
-
-	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
-		"@" + user->getHostname() + " JOIN :" + args.at(1));
+	user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + 
+		" " + args.at(1) + " :End of /NAMES list.");
 }
 
 void JoinCmd::addJoinMessage() {
 	std::string chUsers = getChannelUsers(args.at(1));
 
-	user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + 
-	" " + args.at(1) + " :End of /NAMES list.");
-
-	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 
-		" " + user->getNickname() + " = " + args.at(1) + " :" + chUsers);
-
 	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
 		"@" + user->getHostname() + " JOIN :" + args.at(1));
+	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 
+		" " + user->getNickname() + " = " + args.at(1) + " :" + chUsers);
+	user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + 
+	" " + args.at(1) + " :End of /NAMES list.");
 }
 
 std::string JoinCmd::getChannelUsers(std::string &channelName) {
@@ -76,19 +70,3 @@ std::string JoinCmd::getChannelUsers(std::string &channelName) {
 	ret += "@" + chopName;
 	return ret;
 }
-
-
-// channel creating
-
-// join #mychan
-// :lt!~ltulune@cloak-7A50E5F8.bb.netbynet.ru JOIN :#mychan
-// :moo.slashnet.org MODE #mychan +nt 
-// :moo.slashnet.org 353 lt = #mychan :@lt 
-// :moo.slashnet.org 366 lt #mychan :End of /NAMES list.
-
-// joining channel
-
-// join #mychan
-// :bb!~bbetsey@cloak-7A50E5F8.bb.netbynet.ru JOIN :#mychan
-// :moo.slashnet.org 353 bb = #mychan :bb @lt 
-// :moo.slashnet.org 366 bb #mychan :End of /NAMES list.

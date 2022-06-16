@@ -36,13 +36,8 @@ void	ServerEngine::acceptNewClient(int i, struct kevent *eventList)
 
 void	ServerEngine::deleteEvent(int i, struct kevent *eventList)
 {
-	struct kevent evSet;
-
-	std::cout << "Disconnect " << eventList[i].ident << std::endl;
-	EV_SET(&evSet, eventList[i].ident, eventList[i].filter, EV_DELETE, 0, 0, NULL);
-
-	if (kevent(kq, &evSet, 1, NULL, 0, NULL) == -1)
-		return (printError("kevent() error disconnect"));
+	User *user = static_cast<User*>(eventList[i].udata);
+	user->setState(User::DEACTIVE);
 
 }
 
@@ -110,10 +105,6 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 	}
 	
 	
-}
-
-bool	ServerEngine::channelIsEmpty(Channel *channel) {
-	return channel->getUsers().empty();
 }
 
 void	ServerEngine::watchLoop()
