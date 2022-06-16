@@ -23,5 +23,7 @@ void	NoticeCmd::execute(void) {
 	User *userTarget = usersList->getUser(nickname);
 	if (userTarget) {
 		userTarget->appendMessage(":" + user->getNickname() + " NOTICE " + nickname + " :" + msg);
+	} else {
+		user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + nickname + " : No such nick/channel");
 	}
 }
