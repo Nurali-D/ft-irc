@@ -21,6 +21,7 @@ class UsersList
 		void	removeUser(std::string nickname);
 		void	removeNonactiveUsers(int kq);
 		User	*getUser(std::string nickname);
+		std::vector<User*> getUsers(void);
 };
 
 #endif

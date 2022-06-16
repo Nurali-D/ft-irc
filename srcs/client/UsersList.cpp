@@ -58,3 +58,7 @@ void	UsersList::removeNonactiveUsers(int kq) {
 		}
 	}
 }
+
+std::vector<User*> UsersList::getUsers(void) {
+	return users;
+}
