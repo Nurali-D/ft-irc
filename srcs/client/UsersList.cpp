@@ -36,6 +36,10 @@ User	*UsersList::getUser(std::string nickname) {
 	return (NULL);
 }
 
+std::vector<User*> UsersList::getUsers(void) {
+	return (users);
+}
+
 void	UsersList::removeNonactiveUsers(int kq) {
 	User::UserState deactiveState = User::DEACTIVE;
 	User *user = NULL;
