@@ -13,6 +13,8 @@ else
 endif
 
 SRCS = srcs/main.cpp \
+	srcs/ClientSocket.cpp \
+	srcs/ClientEngine.cpp
 	
 
 OBJS = $(SRCS:.cpp=.o)
