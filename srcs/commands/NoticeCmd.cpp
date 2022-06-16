@@ -13,25 +13,12 @@ NoticeCmd::~NoticeCmd(void) {}
 
 // MARK: - Class Methods
 
-std::string	NoticeCmd::getTopic(std::vector<std::string> &args) {
-	std::vector<std::string>::iterator it;
-	std::string topic;
-
-	it += 2;
-	if ((*it)[0] == '#')
-		(*it).erase(0, 1);
-	while (it != args.end()) {
-		topic += (*it);
-		if (it + 1 != args.end())
-			topic += " ";
-		++it;
-	}
-	return topic;
-}
-
 void	NoticeCmd::execute(void) {
+	if (args.size() != 4)
+		return ;
+
 	std::string target = args.at(1);
-	std::string msg = getTopic(args);
+	std::string msg = args.at(2);
 
 	if (target.at(0) == '#') {
 		Channel *channel = channelsList->getChannel(target);

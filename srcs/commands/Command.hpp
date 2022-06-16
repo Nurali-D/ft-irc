@@ -18,7 +18,8 @@ class Command
 			JOIN,
 			PING,
 			KICK,
-			NOTICE
+			NOTICE,
+			TOPIC
 		};
 
 	protected:

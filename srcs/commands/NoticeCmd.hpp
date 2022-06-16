@@ -12,7 +12,6 @@ class NoticeCmd : public Command
 		~NoticeCmd(void);
 
 		void execute(void);
-		std::string getTopic(std::vector<std::string> &args);
 };
 
 #endif
