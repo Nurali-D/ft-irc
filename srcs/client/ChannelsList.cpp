@@ -43,3 +43,7 @@ void	ChannelsList::eraseNullUsers(void) {
 	for (it = channels.begin(); it != channels.end(); ++it)
 		(*it)->eraseNullUsers();
 }
+
+std::vector<Channel*> ChannelsList::getChannels(void) {
+	return (channels);
+}

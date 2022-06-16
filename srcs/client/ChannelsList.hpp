@@ -14,11 +14,12 @@ class ChannelsList
 		ChannelsList(void);
 		~ChannelsList(void);
 
-		void	addChannel(User *userCreator, std::string channelName);
-		void	removeChannel(std::string channelName);
-		Channel	*getChannel(std::string channelName);
+		void					addChannel(User *userCreator, std::string channelName);
+		void					removeChannel(std::string channelName);
+		Channel					*getChannel(std::string channelName);
+		std::vector<Channel*>	getChannels(void);
 
-		void	eraseNullUsers(void);
+		void					eraseNullUsers(void);
 
 };
 

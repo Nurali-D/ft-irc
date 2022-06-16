@@ -44,6 +44,10 @@ void	UsersList::removeNonactiveUsers(int kq) {
 	for (size_t i = 0; i < users.size(); ++i) {
 		user = users.at(i);
 		if (user->getState() == deactiveState && user->getMessages().empty()) {
+			std::vector<Channel*> channels = user->getJoinedChannels();
+			std::vector<Channel*>::iterator it;
+			for (it = channels.begin(); it != channels.end(); ++it)
+				(*it)->removeUser(user->getNickname());
 			users.erase(users.begin() + i);
 			std::cout << "user deleted" << " fd = " << user->getFd() << std::endl;
 			EV_SET(&evSet[0], user->getFd(), EVFILT_READ, EV_DELETE, 0, 0, NULL); 

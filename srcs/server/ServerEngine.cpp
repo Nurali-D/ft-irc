@@ -140,7 +140,6 @@ void	ServerEngine::watchLoop()
 				writeToClientSocket(i, eventList);
 		}
 		usersList.removeNonactiveUsers(kq);
-		channelsList.eraseNullUsers();
 	}
 }
 

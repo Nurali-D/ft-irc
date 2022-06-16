@@ -81,3 +81,7 @@ bool	User::isOperator(std::string channelName) {
 	}
 	return false;
 }
+
+std::vector<Channel*>	&User::getJoinedChannels() {
+	return (joinedChannels);
+}

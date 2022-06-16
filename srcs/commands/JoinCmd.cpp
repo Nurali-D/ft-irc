@@ -22,7 +22,10 @@ void	JoinCmd::execute(void) {
 
 	Channel *channel = channelsList->getChannel(args[1]);
 	if (channel) {
+		if (channel->getUser(user->getNickname()))
+			return ;
 		channel->addUser(user);
+		user->appendChannel(channel);
 		addJoinMessage();
 		return ;
 	}

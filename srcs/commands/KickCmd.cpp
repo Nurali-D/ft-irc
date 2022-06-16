@@ -38,9 +38,9 @@ void KickCmd::execute(void) {
 
 	if (user->isOperator(channelTarget)) {
 		if (channel->getUser(nicknameTarget)) {
-			channel->removeUser(nicknameTarget);
 			channel->mailing(":" + user->getNickname() + " KICK "
 			+ channelTarget + " " + nicknameTarget + " " + msg, NULL);
+			channel->removeUser(nicknameTarget);
 			return ;
 		} else {
 			user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)

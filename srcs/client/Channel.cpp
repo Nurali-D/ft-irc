@@ -39,10 +39,15 @@ void	Channel::addUser(User *newUser) {
 
 bool	Channel::removeUser(std::string nickname) {
 	std::vector<User*>::iterator it;
+	std::string admin = channelOperator->getNickname();
 	for (it = users.begin(); it != users.end(); ++it) {
-		if ((*it)->getNickname() == nickname)
+		if ((*it)->getNickname() == nickname) {
+			if (nickname == admin) {
+				channelOperator = *(it + 1);
+			}
 			users.erase(it);
 			return true;
+		}
 	}
 	return false;
 }
@@ -67,8 +72,10 @@ void	Channel::mailing(std::string msg, User *fromUser) {
 bool	Channel::isMember(std::string nickname) {
 	std::vector<User*>::iterator it;
 	for (it = users.begin(); it != users.end(); ++it) {
+		std::cout << "member nickname: " << (*it)->getNickname() << " - " + nickname << std::endl;
 		if ((*it)->getNickname() == nickname)
 			return true;
 	}
+	std::cout << "false\n";
 	return false;
 }

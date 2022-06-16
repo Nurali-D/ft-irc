@@ -54,6 +54,7 @@ class User
 		const std::string		&getUsername();
 		const std::string		&getHostname();
 		std::stack<std::string>	&getMessages();
+		std::vector<Channel*>	&getJoinedChannels();
 		const std::string		getAddress();
 		const User::UserState	&getState();	
 		MessageHandler			*getMsgHandler();	

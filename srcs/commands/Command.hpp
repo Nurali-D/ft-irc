@@ -19,7 +19,9 @@ class Command
 			PING,
 			KICK,
 			NOTICE,
-			TOPIC
+			TOPIC,
+			QUIT,
+			WHO
 		};
 
 	protected:
