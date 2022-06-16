@@ -23,6 +23,8 @@ class UsersList
 		User	*getUser(std::string nickname);
 		size_t	size() const;
 		User	*at(int i);
+		User	*findBot();
+		static	bool isBot(User *user);
 };
 
 #endif

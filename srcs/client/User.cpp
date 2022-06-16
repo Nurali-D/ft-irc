@@ -5,6 +5,7 @@ User::User(int fd, struct sockaddr_in address) {
 	this->address = address;
 	this->state = LOGGING;
 	this->readedMsg = "";
+	this->type = "human";
 }
 
 User::~User() {
@@ -17,6 +18,10 @@ void					User::setNickname(std::string nickname) {
 
 void					User::setMsgHandler(MessageHandler *msgHandler) {
 	this->msgHandler = msgHandler;
+}
+
+void					User::setType(std::string type) {
+	this->type = type;
 }
 
 MessageHandler			*User::getMsgHandler() {
@@ -59,6 +64,10 @@ std::queue<std::string>	&User::getMessages() {
 
 int						User::getFd() {
 	return fd;
+}
+
+std::string				User::getType() {
+	return type;
 }
 
 void					User::setState(User::UserState state) {

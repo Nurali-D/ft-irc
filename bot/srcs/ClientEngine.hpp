@@ -22,6 +22,8 @@ private:
 	void		readFromClientSocket(int i, struct kevent *eventList);
 	std::string recv_msg(int fd, int size);
 	void		writeToClientSocket(int i, struct kevent *eventList);
+	void		parseMsg();
+	
 };
 
 #endif

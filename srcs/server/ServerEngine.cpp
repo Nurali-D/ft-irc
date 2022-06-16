@@ -57,7 +57,7 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	}
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	std::cout << ">> " + msg << std::endl;
+	// std::cout << ">> " + msg << std::endl;
 	User *user = static_cast<User*>(eventList[i].udata);
 
 	user->readedMsg += msg;

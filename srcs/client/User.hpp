@@ -36,6 +36,7 @@ class User
 		std::queue<std::string>	messages;
 		MessageHandler			*msgHandler;
 		std::vector<Channel*>	joinedChannels;
+		std::string				type;
 
 	public:
 		User(int fd, struct sockaddr_in address);
@@ -48,6 +49,7 @@ class User
 		void					setUsername(std::string username);
 		void					setState(UserState state);
 		void					setMsgHandler(MessageHandler *msgHandler);
+		void					setType(std::string type);
 		
 		// MARK: - getters
 		const std::string		&getNickname();
@@ -58,6 +60,7 @@ class User
 		const User::UserState	&getState();	
 		MessageHandler			*getMsgHandler();	
 		int						getFd();
+		std::string				getType();
 		// MARK: - methods
 		void					appendMessage(std::string message);
 		void					appendChannel(Channel *channel);

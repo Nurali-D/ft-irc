@@ -12,6 +12,9 @@ class BotCmd : public Command
 		~BotCmd(void);
 
 		void execute();
+
+	private:
+		std::string msgToBot;
 };
 
 

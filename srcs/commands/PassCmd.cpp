@@ -25,7 +25,10 @@ void PassCmd::execute()
 	if (zeroPos == ':') {
 		receivedPass = receivedPass.substr(1);
 	}
-	if (receivedPass != args.at(2)) {
+	if (receivedPass == (args.at(2) + "bot")) {
+		user->setType("bot");
+	}
+	else if (receivedPass != args.at(2)) {
 		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " :Password incorrect!");
 		user->appendMessage(":server KILL " + user->getAddress() + " :Bad password");
 		user->setState(User::DEACTIVE);

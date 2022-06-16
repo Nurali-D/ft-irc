@@ -3,7 +3,7 @@
 ClientEngine::ClientEngine(ClientSocket &cs) : cs(cs) {
 	sendMsgs.push("nick SuperBot");
 	sendMsgs.push("user SuperBot");
-	sendMsgs.push("pass " + cs.getPassword());
+	sendMsgs.push("pass " + cs.getPassword() + "bot");
 	makeQueue();
 }
 
@@ -53,19 +53,52 @@ void		ClientEngine::watchLoop() {
 void	ClientEngine::readFromClientSocket(int i, struct kevent *eventList)
 {
 	if (eventList[i].flags & EV_EOF) {
-		std::cerr << "Connection failed.";
+		std::cerr << "Connection failed.\n";
 		exit (-1);
 	}
-	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	std::cout << ">> " + msg << std::endl;
-	readedMsg += msg;
-	std::cout << msg << std::endl;
-	// size_t pos = readedMsg.find("\r\n", 0);
-	// if (pos != std::string::npos) {
-	// 	//parser
-	// }
-	sendMsgs.push(msg + " ------>got it");
-	
+	readedMsg = recv_msg(eventList[i].ident, (int)eventList[i].data);
+	std::cout << readedMsg << std::endl;
+	parseMsg();
+
+}
+
+void	ClientEngine::parseMsg() {
+	std::string delimiter = " ";
+	size_t pos = 0;
+	std::string token;
+	std::vector<std::string> cmdWithArgs;
+
+	size_t positionToErase = readedMsg.find("\r\n");
+	if (positionToErase != std::string::npos) {
+		readedMsg.erase(positionToErase, 2);
+	} else {
+		positionToErase = readedMsg.find("\n");
+		if (positionToErase != std::string::npos)
+			readedMsg.erase(positionToErase, 1);
+	}
+	while ((pos = readedMsg.find(delimiter)) != std::string::npos) {
+		if (readedMsg.find_first_not_of(" ") == 0) {
+			token = readedMsg.substr(0, pos);
+			char zeroPos = token.at(0);
+			if (zeroPos != ':') {
+				cmdWithArgs.push_back(token);
+			} else if (cmdWithArgs.size() > 0) {
+				// std::cout << "-------------------|" << readedMsg << "|" << std::endl;
+				cmdWithArgs.push_back(readedMsg);
+				readedMsg = "";
+				break;
+			}
+		}
+		readedMsg.erase(0, pos + delimiter.length());
+	}
+	if (readedMsg != "") {
+		// readedMsg.erase(readedMsg.length() - 1, 1);
+		cmdWithArgs.push_back(readedMsg);
+	}
+	for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
+		std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
+	}
+	// findCommand(cmdWithArgs);
 }
 
 std::string ClientEngine::recv_msg(int fd, int size)
@@ -87,7 +120,7 @@ void	ClientEngine::writeToClientSocket(int i, struct kevent *eventList)
 	}
 	
 	if (!sendMsgs.empty()) {
-		std::string msg = sendMsgs.top();
+		std::string msg = sendMsgs.front();
 		msg += "\r\n";
 		sendMsgs.pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);

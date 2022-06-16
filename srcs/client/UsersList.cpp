@@ -52,8 +52,7 @@ void	UsersList::removeNonactiveUsers(int kq) {
 				std::cerr << "kevent() error 2" << std::endl;
 				return ;
 			}
-			close(user->getFd()); // disconnects user from server
-			// deleteUserFromChannels(user); // note: need to modify
+			close(user->getFd());
 			break;
 		}
 	}
@@ -65,4 +64,14 @@ size_t	UsersList::size() const {
 
 User	*UsersList::at(int i) {
 	return users.at(i);
+}
+
+User	*UsersList::findBot() {
+
+	std::vector<User*>::iterator it = std::find_if(users.begin(), users.end(), isBot);
+	return (*it);
+}
+
+bool	UsersList::isBot(User *user) {
+	return user->getType() == "bot";
 }
