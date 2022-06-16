@@ -29,7 +29,8 @@ SRCS = srcs/main.cpp \
 	srcs/commands/PingCmd.cpp \
 	srcs/commands/KickCmd.cpp \
 	srcs/commands/NoticeCmd.cpp \
-	srcs/commands/TopicCmd.cpp
+	srcs/commands/TopicCmd.cpp \
+	srcs/commands/BotCmd.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

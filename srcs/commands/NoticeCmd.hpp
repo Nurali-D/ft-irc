@@ -1,5 +1,5 @@
-#ifndef NOTICE_HPP
-#define NOTICE_HPP
+#ifndef NOTICECMD_HPP
+#define NOTICECMD_HPP
 
 #include "../headers/libraryHeaders.hpp"
 #include "Command.hpp"

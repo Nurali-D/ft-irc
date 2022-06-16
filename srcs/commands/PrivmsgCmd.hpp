@@ -1,5 +1,5 @@
-#ifndef PRIVMSG_HPP
-#define PRIVMSG_HPP
+#ifndef PRIVMSGCMD_HPP
+#define PRIVMSGCMD_HPP
 
 #include "../headers/libraryHeaders.hpp"
 #include "Command.hpp"

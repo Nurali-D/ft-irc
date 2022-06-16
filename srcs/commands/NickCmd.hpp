@@ -1,5 +1,5 @@
-#ifndef NICK_HPP
-#define NICK_HPP
+#ifndef NICKCMD_HPP
+#define NICKCMD_HPP
 
 #include "../headers/libraryHeaders.hpp"
 #include "Command.hpp"

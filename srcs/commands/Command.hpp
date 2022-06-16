@@ -19,7 +19,8 @@ class Command
 			PING,
 			KICK,
 			NOTICE,
-			TOPIC
+			TOPIC,
+			BOT
 		};
 
 	protected:
