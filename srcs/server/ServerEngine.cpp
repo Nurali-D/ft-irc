@@ -78,12 +78,10 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		}
 		
 		user->readedMsg = "";
-		// std::cerr << "nickname: " << user->getNickname()
-		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
-	std::vector<User*> users = usersList.getUsers();
-	for (size_t i = 0; i < users.size(); ++i) {
-		User *u = users.at(i);
+	
+	for (size_t i = 0; i < usersList.size(); ++i) {
+		User *u = usersList.at(i);
 		std::cout << "user " << i << " nickname: " << u->getNickname()
 			<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
 	}
@@ -96,7 +94,7 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	User *user = static_cast<User*>(eventList[i].udata);
 	if (!user->getMessages().empty()) {
-		std::string msg = user->getMessages().top();
+		std::string msg = user->getMessages().front();
 		msg += "\r\n";
 		user->getMessages().pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);

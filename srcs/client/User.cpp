@@ -53,7 +53,7 @@ const User::UserState	&User::getState() {
 	return (this->state);
 }
 
-std::stack<std::string>	&User::getMessages() {
+std::queue<std::string>	&User::getMessages() {
 	return (this->messages);
 }
 

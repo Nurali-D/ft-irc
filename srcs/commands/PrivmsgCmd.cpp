@@ -27,7 +27,7 @@ void	PrivmsgCmd::execute(void) {
 		
 		Channel *channel = channelsList->getChannel(target);
 		if (channel) {
-			if (channel->isMember(target))
+			if (channel->isMember(user->getNickname()))
 				channel->mailing(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg, user);
 			else
 				user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)
