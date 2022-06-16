@@ -6,11 +6,6 @@
 #include <stack>
 #include "../headers/libraryHeaders.hpp"
 
-// #include "../commands/NickCmd.hpp"
-// #include "../commands/PassCmd.hpp"
-// #include "../commands/Privmsg.hpp"
-// #include "../commands/UserCmd.hpp"
-
 class Command;
 class MessageHandler;
 

@@ -21,7 +21,10 @@ class UsersList
 		void	removeUser(std::string nickname);
 		void	removeNonactiveUsers(int kq);
 		User	*getUser(std::string nickname);
-		std::vector<User*> getUsers(void);
+		size_t	size() const;
+		User	*at(int i);
+		User	*findBot();
+		static	bool isBot(User *user);
 };
 
 #endif

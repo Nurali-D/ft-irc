@@ -1,5 +1,5 @@
-#ifndef PING_HPP
-#define PING_HPP
+#ifndef PINGCMD_HPP
+#define PINGCMD_HPP
 
 #include "Command.hpp"
 #include "../headers/rpl_codes.hpp"

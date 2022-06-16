@@ -1,5 +1,5 @@
-#ifndef JOIN_HPP
-#define JOIN_HPP
+#ifndef JOINCMD_HPP
+#define JOINCMD_HPP
 
 #include "../headers/libraryHeaders.hpp"
 #include "Command.hpp"

@@ -36,13 +36,8 @@ void	ServerEngine::acceptNewClient(int i, struct kevent *eventList)
 
 void	ServerEngine::deleteEvent(int i, struct kevent *eventList)
 {
-	struct kevent evSet;
-
-	std::cout << "Disconnect " << eventList[i].ident << std::endl;
-	EV_SET(&evSet, eventList[i].ident, eventList[i].filter, EV_DELETE, 0, 0, NULL);
-
-	if (kevent(kq, &evSet, 1, NULL, 0, NULL) == -1)
-		return (printError("kevent() error disconnect"));
+	User *user = static_cast<User*>(eventList[i].udata);
+	user->setState(User::DEACTIVE);
 
 }
 
@@ -62,7 +57,7 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	}
 	std::string msg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	std::cout << ">> " + msg << std::endl;
+	// std::cout << ">> " + msg << std::endl;
 	User *user = static_cast<User*>(eventList[i].udata);
 
 	user->readedMsg += msg;
@@ -83,12 +78,10 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 		}
 		
 		user->readedMsg = "";
-		// std::cerr << "nickname: " << user->getNickname()
-		// 	<< " username: " << user->getUsername() << " status: " << user->getState() << std::endl;
 	}
-	std::vector<User*> users = usersList.getUsers();
-	for (size_t i = 0; i < users.size(); ++i) {
-		User *u = users.at(i);
+	
+	for (size_t i = 0; i < usersList.size(); ++i) {
+		User *u = usersList.at(i);
 		std::cout << "user " << i << " nickname: " << u->getNickname()
 			<< " username: " << u->getUsername() << " status: " << u->getState() << std::endl;
 	}
@@ -101,7 +94,7 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 		deleteEvent(i, eventList);
 	User *user = static_cast<User*>(eventList[i].udata);
 	if (!user->getMessages().empty()) {
-		std::string msg = user->getMessages().top();
+		std::string msg = user->getMessages().front();
 		msg += "\r\n";
 		user->getMessages().pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
@@ -111,10 +104,6 @@ void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 	}
 	
 	
-}
-
-bool	ServerEngine::channelIsEmpty(Channel *channel) {
-	return channel->getUsers().empty();
 }
 
 void	ServerEngine::watchLoop()

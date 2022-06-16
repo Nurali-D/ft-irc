@@ -11,6 +11,7 @@
 #include "TopicCmd.hpp"
 #include "QuitCmd.hpp"
 #include "WhoCmd.hpp"
+#include "BotCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -23,7 +24,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 	user(user)
 {}
 
-const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", "kick", "notice", "topic", "quit", "who"};
+const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", "kick", "notice", "topic", "quit", "who", "bot"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 
@@ -73,6 +74,8 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new QuitCmd(args, user);
 		case WHO :
 			return new WhoCmd(args, user);
+		case BOT :
+			return new BotCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray
 	}
@@ -81,13 +84,13 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 
 void Command::addWelcomeMessage() {
 
-	user->appendMessage(":server " + std::string(RPL_ENDOFMOTD) + " "
-		+ user->getNickname() + " ::End of /MOTD command.");
-	user->appendMessage(":server " + std::string(RPL_MOTD) + " "
-		+ user->getNickname() + " :- EASY MESSENGER by bbetsey & ltulune -");
-	user->appendMessage(":server " + std::string(RPL_MOTDSTART) + " "
-		+ user->getNickname() + " :- Message of the Day -");
 	user->appendMessage(":server 00" + std::string(RPL_WELCOME) + " "
 		+ user->getNickname() + " :Welcome to the Internet Relay Network "
 		+ user->getNickname() + "!" + user->getHostname() + "@" + user->getAddress());
+	user->appendMessage(":server " + std::string(RPL_MOTDSTART) + " "
+		+ user->getNickname() + " :- Message of the Day -");
+	user->appendMessage(":server " + std::string(RPL_MOTD) + " "
+		+ user->getNickname() + " :- EASY MESSENGER by bbetsey & ltulune -");
+	user->appendMessage(":server " + std::string(RPL_ENDOFMOTD) + " "
+		+ user->getNickname() + " ::End of /MOTD command.");
 }
