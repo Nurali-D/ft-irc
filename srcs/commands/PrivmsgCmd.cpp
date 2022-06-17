@@ -31,9 +31,10 @@ void	PrivmsgCmd::execute(void) {
 				channel->mailing(":" + user->getNickname() + " PRIVMSG " + target + " :" + msg, user);
 			else
 				user->appendMessage(":server " + std::string(ERR_USERNOTINCHANNEL)
-				+ " " + target + ": You're not member of this channel");
+				+ " " + user->getNickname() + ": You're not member of this channel");
 		} else {
-			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + target + " : No such channel");
+			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + user->getNickname()
+				+ " : No such channel");
 		}
 
 	} else {
@@ -42,7 +43,8 @@ void	PrivmsgCmd::execute(void) {
 			targetUser->appendMessage(":" + user->getNickname() + "!" + user->getNickname()
 			+ "@" + user->getAddress() + " PRIVMSG " + target + " :" + msg);
 		} else {
-			user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + target + " : No such nick/channel");
+			user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + user->getNickname()
+				+ " : No such nick/channel");
 		}
 	}
 }

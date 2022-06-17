@@ -25,7 +25,8 @@ void	NoticeCmd::execute(void) {
 		if (channel)
 			channel->mailing(":" + user->getNickname() + " NOTICE " + target + " :" + msg, user);
 		else
-			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + target + " : No such channel");
+			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + user->getNickname()
+				+ " : No such channel");
 		return ;
 	}
 
@@ -33,6 +34,7 @@ void	NoticeCmd::execute(void) {
 	if (userTarget) {
 		userTarget->appendMessage(":" + user->getNickname() + " NOTICE " + target + " :" + msg);
 	} else {
-		user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + target + " : No such nick/channel");
+		user->appendMessage(":server " + std::string(ERR_NOSUCHNICK) + " " + user->getNickname()
+			+ " : No such nick/channel");
 	}
 }

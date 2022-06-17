@@ -23,7 +23,7 @@ void	TopicCmd::execute(void) {
 	Channel *channel = channelsList->getChannel(channelTarget);
 	if (!channel) {
 		user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL)
-		+ " " + channelTarget + " : No such channel");
+		+ " " + user->getNickname() + " : No such channel");
 		return ;
 	}
 	channel->setTopic(topic);
