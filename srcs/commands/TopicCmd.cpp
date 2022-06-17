@@ -26,5 +26,6 @@ void	TopicCmd::execute(void) {
 		+ " " + channelTarget + " : No such channel");
 		return ;
 	}
+	channel->setTopic(topic);
 	channel->mailing(":" + user->getNickname() + " TOPIC " + channelTarget + " :" + topic, NULL);
 }

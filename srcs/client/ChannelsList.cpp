@@ -15,6 +15,7 @@ ChannelsList::~ChannelsList(void) {}
 
 void	ChannelsList::addChannel(User *userCreator, std::string channelName) {
 	Channel *newChannel = new Channel(userCreator, channelName);
+	newChannel->setTopic("Undefined topic");
 	userCreator->appendChannel(newChannel);
 	channels.push_back(newChannel);
 }

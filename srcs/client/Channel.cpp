@@ -79,3 +79,11 @@ bool	Channel::isMember(std::string nickname) {
 	std::cout << "false\n";
 	return false;
 }
+
+std::string	Channel::getTopic(void) {
+	return (topic);
+}
+
+void	Channel::setTopic(std::string newTopic) {
+	topic = newTopic;
+}

@@ -23,7 +23,8 @@ class Command
 			QUIT,
 			WHO,
 			BOT,
-			NAMES
+			NAMES,
+			LIST
 		};
 
 	protected:
