@@ -63,7 +63,7 @@ void	WhoCmd::execute(void) {
 					(*it)->getNickname() + " " + (*it)->getUsername() + "@" + (*it)->getAddress());
 			}
 			
-			user->appendMessage(":server " + std::string(RPL_ENDOFWHO) + " : End of WHO");
+			user->appendMessage(":server " + std::string(RPL_ENDOFWHO) + " " + args.at(1) + " : End of WHO");
 		}
 	}
 }
