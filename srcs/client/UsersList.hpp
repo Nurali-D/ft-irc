@@ -26,6 +26,7 @@ class UsersList
 		User	*at(int i);
 		User	*findBot();
 		static	bool isBot(User *user);
+		bool	isUsedNickname(std::string nickname);
 };
 
 #endif

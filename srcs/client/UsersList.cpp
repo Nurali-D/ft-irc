@@ -83,3 +83,12 @@ User	*UsersList::findBot() {
 bool	UsersList::isBot(User *user) {
 	return user->getType() == "bot";
 }
+
+bool	UsersList::isUsedNickname(std::string nickname) {
+	std::vector<User*>::iterator it;
+	for (it = users.begin(); it != users.end(); ++it) {
+		if ((*it)->getNickname() == nickname)
+			return true;
+	}
+	return false;
+}

@@ -26,5 +26,5 @@ void	TopicCmd::execute(void) {
 		+ " " + channelTarget + " : No such channel");
 		return ;
 	}
-	user->appendMessage(":" + user->getNickname() + " TOPIC " + channelTarget + " :" + topic);
+	channel->mailing(":" + user->getNickname() + " TOPIC " + channelTarget + " :" + topic, NULL);
 }
