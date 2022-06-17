@@ -30,6 +30,8 @@ void	NickCmd::execute() {
 	}
 
 	user->setNickname(nickname);
-	if (user->getState() == User::AUTH && user->isNickAndUsername())
+	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
 		addWelcomeMessage();
+		user->setState(User::ACTIVE);
+	}
 }
