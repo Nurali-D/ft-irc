@@ -33,7 +33,8 @@ SRCS = srcs/main.cpp \
 	srcs/commands/QuitCmd.cpp \
 	srcs/commands/WhoCmd.cpp \
 	srcs/commands/BotCmd.cpp \
-	srcs/commands/NamesCmd.cpp
+	srcs/commands/NamesCmd.cpp \
+	srcs/commands/ListCmd.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

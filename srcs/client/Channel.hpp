@@ -15,7 +15,7 @@ class Channel
 		std::vector<User*>	users;
 		User				*channelOperator;
 		std::string			name;
-		std::string			topik;
+		std::string			topic;
 
 	public:
 		Channel(User *userCreator, std::string channelName);
@@ -25,6 +25,8 @@ class Channel
 		std::vector<User*>	&getUsers();
 		User				*getUser(std::string nickname);
 		User				*getChannelOperator();
+		std::string			getTopic();
+		void				setTopic(std::string newTopic);
 		void				setChannelOperator();
 		void				addUser(User *newUser);
 		bool				removeUser(std::string nickname);
