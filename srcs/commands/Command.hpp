@@ -22,7 +22,8 @@ class Command
 			TOPIC,
 			QUIT,
 			WHO,
-			BOT
+			BOT,
+			NAMES
 		};
 
 	protected:
