@@ -116,7 +116,6 @@ void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 		
 		msg = "Need more params. See \"bot help\"";
 		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
-		// std::cout << "findCommand test\n";
 	}
 	if (cmdWithArgs.at(2) == "help") {
 		char c = 28;
@@ -128,7 +127,8 @@ void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 		std::string purple = color_start + "13";
 		std::string green = color_start + "9";
 		msg += "\n- " + green + "BOT save_channel #channel_name " + purple + " - saves channel on server after quiting all users;";
-		msg += "\n- BOT voting #channel_name :question 8- sends to all channel's users question.";
+		msg += "\n- " + green + "BOT cpp_test start " + purple + " - start cpp test.";
+		msg += "\n- " + green + "BOT vote <answer's_number> " + purple + " - answer the question.";
 		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
 	}
 	
