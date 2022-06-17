@@ -20,7 +20,6 @@ class Command
 			KICK,
 			NOTICE,
 			TOPIC,
-			HEAD,
 			QUIT,
 			WHO,
 			BOT

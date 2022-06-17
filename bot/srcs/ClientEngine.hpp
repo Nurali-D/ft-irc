@@ -23,6 +23,7 @@ private:
 	std::string recv_msg(int fd, int size);
 	void		writeToClientSocket(int i, struct kevent *eventList);
 	void		parseMsg();
+	void		findCommand(std::vector<std::string> &cmdWithArgs);
 	
 };
 

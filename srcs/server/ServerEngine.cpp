@@ -90,8 +90,9 @@ void	ServerEngine::readFromClientSocket(int i, struct kevent *eventList)
 void	ServerEngine::writeToClientSocket(int i, struct kevent *eventList)
 {
 	
-	if (eventList[i].flags & EV_EOF)
+	if (eventList[i].flags & EV_EOF) {
 		deleteEvent(i, eventList);
+	}
 	User *user = static_cast<User*>(eventList[i].udata);
 	if (!user->getMessages().empty()) {
 		std::string msg = user->getMessages().front();

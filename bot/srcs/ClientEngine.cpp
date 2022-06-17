@@ -57,8 +57,10 @@ void	ClientEngine::readFromClientSocket(int i, struct kevent *eventList)
 		exit (-1);
 	}
 	readedMsg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	std::cout << readedMsg << std::endl;
-	parseMsg();
+	// std::cout << "=======>\n" << readedMsg << "-------------" << std::endl;
+	if (readedMsg.rfind(":server", 0) == std::string::npos) {
+		parseMsg();
+	}
 
 }
 
@@ -83,7 +85,6 @@ void	ClientEngine::parseMsg() {
 			if (zeroPos != ':') {
 				cmdWithArgs.push_back(token);
 			} else if (cmdWithArgs.size() > 0) {
-				// std::cout << "-------------------|" << readedMsg << "|" << std::endl;
 				cmdWithArgs.push_back(readedMsg);
 				readedMsg = "";
 				break;
@@ -92,13 +93,28 @@ void	ClientEngine::parseMsg() {
 		readedMsg.erase(0, pos + delimiter.length());
 	}
 	if (readedMsg != "") {
-		// readedMsg.erase(readedMsg.length() - 1, 1);
 		cmdWithArgs.push_back(readedMsg);
 	}
 	for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
 		std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
 	}
-	// findCommand(cmdWithArgs);
+	findCommand(cmdWithArgs);
+}
+
+void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
+	std::string msg;
+	size_t size = cmdWithArgs.size();
+	if (size < 3) {
+		
+		msg = "Need more params. See \"bot help\"";
+		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
+		// std::cout << "findCommand test\n";
+	}
+	if (cmdWithArgs.at(2) == "help") {
+		msg = "\nbot save_channel #channel_name - saves channel on server after quiting all users;\nbot voting #channel_name :question - sends to all channel's users question.";
+		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
+	}
+	
 }
 
 std::string ClientEngine::recv_msg(int fd, int size)
@@ -120,8 +136,10 @@ void	ClientEngine::writeToClientSocket(int i, struct kevent *eventList)
 	}
 	
 	if (!sendMsgs.empty()) {
+		 
 		std::string msg = sendMsgs.front();
 		msg += "\r\n";
+		std::cout << "=========>" << msg;
 		sendMsgs.pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
 		if (sended == -1) {
