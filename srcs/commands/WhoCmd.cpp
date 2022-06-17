@@ -14,6 +14,9 @@ WhoCmd::~WhoCmd(void) {}
 // MARK: - Class Methods
 
 void	WhoCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+
 	if (args.size() == 2) {
 		std::vector<User*> users = usersList->getUsers();
 		std::stringstream ss;

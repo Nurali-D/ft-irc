@@ -20,6 +20,9 @@ std::string	ListCmd::itoa(int size) {
 }
 
 void	ListCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+	
 	if (args.size() == 2) {
 		std::vector<Channel*> channels = channelsList->getChannels();
 		std::vector<Channel*>::iterator it;

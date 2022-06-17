@@ -14,8 +14,11 @@ KickCmd::~KickCmd(void) {}
 // MARK: - Class Methods
 
 void KickCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+
 	if (args.size() != 5)
-		return ; // note: RPL_NEEDMOREPARAMS
+		return ;
 	
 	std::string channelTarget = args.at(1);
 	std::string nicknameTarget = args.at(2);

@@ -14,6 +14,9 @@ JoinCmd::~JoinCmd(void) {}
 // MARK: - Class Methods
 
 void	JoinCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+		
 	if (args.size() != 3)
 		return ;
 

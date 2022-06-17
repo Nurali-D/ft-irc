@@ -14,6 +14,9 @@ PrivmsgCmd::~PrivmsgCmd(void) {}
 // MARK: - Class Methods
 
 void	PrivmsgCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+
 	if (args.size() != 4)
 		return ;
 	

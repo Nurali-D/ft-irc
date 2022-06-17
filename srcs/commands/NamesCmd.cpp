@@ -14,6 +14,9 @@ NamesCmd::~NamesCmd(void) {}
 // MARK: - Class Methdos
 
 void	NamesCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+
 	if (args.size() == 2) {
 		std::vector<User*> users = usersList->getUsers();
 		std::vector<Channel*> channels = channelsList->getChannels();
