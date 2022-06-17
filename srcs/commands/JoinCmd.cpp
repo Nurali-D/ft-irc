@@ -38,7 +38,7 @@ void JoinCmd::addCreateMessage() {
 	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
 		"@" + user->getHostname() + " JOIN :" + args.at(1));
 	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 
-		" " + user->getNickname() + " = " + args.at(1) + 
+		" " + user->getNickname() + " " + args.at(1) + 
 		" :@" + user->getNickname());
 	user->appendMessage(":server " + std::string(RPL_TOPIC) + " " + user->getNickname() + " "
 		+ args.at(1) + " :Undefined topic");
@@ -52,7 +52,7 @@ void JoinCmd::addJoinMessage() {
 	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
 		"@" + user->getHostname() + " JOIN :" + args.at(1));
 	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 
-		" " + user->getNickname() + " = " + args.at(1) + " :" + chUsers);
+		" " + user->getNickname() + " " + args.at(1) + " :" + chUsers);
 	user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + 
 	" " + args.at(1) + " :End of /NAMES list.");
 }
