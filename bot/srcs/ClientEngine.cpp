@@ -97,6 +97,14 @@ void	ClientEngine::parseMsg() {
 	}
 	for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
 		std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
+		if (i == 2) {
+			char zero = cmdWithArgs.at(i).at(0);
+			std::cout << (int)zero << std::endl;
+			zero = cmdWithArgs.at(i).at(1);
+			std::cout << (int)zero << std::endl;
+			zero = cmdWithArgs.at(i).at(2);
+			std::cout << (int)zero << std::endl;
+		}
 	}
 	findCommand(cmdWithArgs);
 }
@@ -111,7 +119,16 @@ void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 		// std::cout << "findCommand test\n";
 	}
 	if (cmdWithArgs.at(2) == "help") {
-		msg = "\nbot save_channel #channel_name - saves channel on server after quiting all users;\nbot voting #channel_name :question - sends to all channel's users question.";
+		char c = 28;
+		std::string smile(1, c);
+		smile += "penguin";
+		msg += "\n - " + smile;
+		c = 3;
+		std::string color_start(1, c);
+		std::string purple = color_start + "13";
+		std::string green = color_start + "9";
+		msg += "\n- " + green + "BOT save_channel #channel_name " + purple + " - saves channel on server after quiting all users;";
+		msg += "\n- BOT voting #channel_name :question 8- sends to all channel's users question.";
 		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
 	}
 	
