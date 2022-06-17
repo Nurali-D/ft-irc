@@ -20,6 +20,6 @@ void	UserCmd::execute(void) {
 	user->setUsername(args.at(1));
 	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
 		addWelcomeMessage();
-
+		user->setState(User::ACTIVE);
 	}
 }

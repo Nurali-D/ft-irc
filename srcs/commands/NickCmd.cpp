@@ -32,6 +32,8 @@ void	NickCmd::execute() {
 	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() + "@" + user->getAddress()
 		+ " NICK :" + nickname);
 	user->setNickname(nickname);
-	if (user->getState() == User::AUTH && user->isNickAndUsername())
+	if (user->getState() == User::AUTH && user->isNickAndUsername()) {
 		addWelcomeMessage();
+		user->setState(User::ACTIVE);
+	}
 }
