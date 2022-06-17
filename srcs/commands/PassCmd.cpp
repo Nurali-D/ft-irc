@@ -17,7 +17,8 @@ void PassCmd::execute()
 {
 	std::cout << "user pass: " << args.at(1).size() << " - server pass: " << args.at(2).size() << std::endl;
 	if (args.size() != 3) {
-		user->appendMessage(":server " + std::string(ERR_NEEDMOREPARAMS) + " :Need more params!");
+		user->appendMessage(":server " + std::string(ERR_NEEDMOREPARAMS) + " " + user->getNickname()
+			+ " :Need more params!");
 		return ;
 	}
 	std::string receivedPass = args.at(1);
@@ -29,7 +30,8 @@ void PassCmd::execute()
 		user->setType("bot");
 	}
 	else if (receivedPass != args.at(2)) {
-		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " :Password incorrect!");
+		user->appendMessage(":server " + std::string(ERR_PASSWDMISMATCH) + " " + user->getNickname()
+			+ " :Password incorrect!");
 		user->appendMessage(":server KILL " + user->getAddress() + " :Bad password");
 		user->setState(User::DEACTIVE);
 		return ;

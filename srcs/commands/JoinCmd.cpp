@@ -34,7 +34,8 @@ void	JoinCmd::execute(void) {
 }
 
 void JoinCmd::addCreateMessage() {
-	user->appendMessage(":server " + std::string(RPL_YOUREOPER) + " :You are now an IRC operator");
+	user->appendMessage(":server " + std::string(RPL_YOUREOPER) + " " + user->getNickname()
+		+ " :You are now an IRC operator");
 	user->appendMessage(":" + user->getNickname() + "!~" + user->getUsername() +
 		"@" + user->getHostname() + " JOIN :" + args.at(1));
 	user->appendMessage(":server " + std::string(RPL_NAMREPLY) + 

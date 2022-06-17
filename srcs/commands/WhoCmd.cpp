@@ -23,15 +23,15 @@ void	WhoCmd::execute(void) {
 		std::vector<User*>::iterator it;
 
 		if (users.size() == 1)
-			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " Server has : " 
-				+ usersCount + " user.");
+			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+				+ " Server has : " + usersCount + " user.");
 		else if (users.size() > 1)
-			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " Server has : " 
-				+ usersCount + " users.");
+			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+				+ " Server has : " + usersCount + " users.");
 
 		for (it = users.begin(); it != users.end(); ++it)
-			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " 
-				+ (*it)->getNickname() + " " + (*it)->getUsername() + "@" + (*it)->getAddress());
+			user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+				+ " " + (*it)->getNickname() + " " + (*it)->getUsername() + "@" + (*it)->getAddress());
 
 		user->appendMessage(":server " + std::string(RPL_ENDOFWHO) + " : End of WHO");
 		
@@ -47,11 +47,11 @@ void	WhoCmd::execute(void) {
 			ss << users.size();
 			std::string usersCount = ss.str();
 			if (users.size() == 1)
-				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " Channel " 
-					+ channel->getName() + " has : " + usersCount + " user.");
+				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+					+ " Channel " + channel->getName() + " has : " + usersCount + " user.");
 			else if (users.size() > 1)
-				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " Channel " 
-					+ channel->getName() + " has : " + usersCount + " users.");
+				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+					+ " Channel " + channel->getName() + " has : " + usersCount + " users.");
 			
 			std::vector<User*>::iterator it;
 			std::string channelAdmin = channel->getChannelOperator()->getNickname();
@@ -59,11 +59,12 @@ void	WhoCmd::execute(void) {
 				std::string prefix;
 				if ((*it)->getNickname() == channelAdmin)
 					prefix += "@";
-				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + prefix + 
-					(*it)->getNickname() + " " + (*it)->getUsername() + "@" + (*it)->getAddress());
+				user->appendMessage(":server " + std::string(RPL_WHOREPLY) + " " + user->getNickname()
+					+ " " + prefix + (*it)->getNickname() + " " + (*it)->getUsername() + "@" + (*it)->getAddress());
 			}
 			
-			user->appendMessage(":server " + std::string(RPL_ENDOFWHO) + " : End of WHO");
+			user->appendMessage(":server " + std::string(RPL_ENDOFWHO) + " " + user->getNickname()
+				+ " : End of WHO");
 		}
 	}
 }

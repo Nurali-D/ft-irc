@@ -15,7 +15,8 @@ NickCmd::~NickCmd(void) {}
 
 void	NickCmd::execute() {
 	if (args.size() == 2) {
-		user->appendMessage(":server " + std::string(ERR_NONICKNAMEGIVEN) + " : No nickname given");
+		user->appendMessage(":server " + std::string(ERR_NONICKNAMEGIVEN) + " " + user->getNickname()
+			+ " : No nickname given");
 		return ;
 	}
 	if (args.size() != 3)
@@ -23,7 +24,8 @@ void	NickCmd::execute() {
 	
 	std::string nickname = args.at(1);
 	if (usersList->isUsedNickname(nickname)) {
-		user->appendMessage(":server " + std::string(ERR_NICKNAMEINUSE) + " " + nickname + " : Nickname is already in use");
+		user->appendMessage(":server " + std::string(ERR_NICKNAMEINUSE) + " " + user->getNickname()
+			+ " : Nickname is already in use");
 		return ;
 	}
 

@@ -28,7 +28,7 @@ void	NamesCmd::execute(void) {
 				if (cu_it + 1 != channelUsers.end())
 					usersString += " ";
 			}
-			user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " Channel " + (*it)->getName() + " : " + usersString);
+			user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " " + user->getNickname() + " Channel " + (*it)->getName() + " : " + usersString);
 		}
 
 		std::vector<User*>::iterator u_it;
@@ -40,8 +40,8 @@ void	NamesCmd::execute(void) {
 					usersString += " ";
 			}
 		}
-		user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " : " + usersString);
-		user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + " :End of /NAMES list");
+		user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " " + user->getNickname()  + " : " + usersString);
+		user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + " " + user->getNickname()  + " :End of /NAMES list");
 
 	} else {
 
@@ -56,10 +56,10 @@ void	NamesCmd::execute(void) {
 				if (cu_it + 1 != channelUsers.end())
 					usersString += " ";
 			}
-			user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " Channel " + channel->getName() + " : " + usersString);
-			user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + " :End of /NAMES list");
+			user->appendMessage(":server " + std::string(RPL_NAMREPLY) + " " + user->getNickname() + " Channel " + channel->getName() + " : " + usersString);
+			user->appendMessage(":server " + std::string(RPL_ENDOFNAMES) + " " + user->getNickname() + " " + channelTarget + " :End of /NAMES list");
 		} else {
-			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + channelTarget 
+			user->appendMessage(":server " + std::string(ERR_NOSUCHCHANNEL) + " " + user->getNickname()  + " " + channelTarget 
 				+ ": No such channel!");
 		}
 	}
