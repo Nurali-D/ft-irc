@@ -15,7 +15,7 @@ KickCmd::~KickCmd(void) {}
 
 void KickCmd::execute(void) {
 	if (args.size() != 5)
-		return ;
+		return ; // note: RPL_NEEDMOREPARAMS
 	
 	std::string channelTarget = args.at(1);
 	std::string nicknameTarget = args.at(2);
