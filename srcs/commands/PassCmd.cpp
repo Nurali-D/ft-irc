@@ -15,7 +15,6 @@ PassCmd::~PassCmd(void) {}
 
 void PassCmd::execute()
 {
-	std::cout << "user pass: " << args.at(1).size() << " - server pass: " << args.at(2).size() << std::endl;
 	if (args.size() != 3) {
 		user->appendMessage(":server " + std::string(ERR_NEEDMOREPARAMS) + " " + user->getNickname()
 			+ " :Need more params!");

@@ -85,7 +85,6 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 		case LIST :
 			return new ListCmd(args, user);
 		case FROMBOT :
-			std::cout << "test case frombot\n";
 			return new FromBotCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray

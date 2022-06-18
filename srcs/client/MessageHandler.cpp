@@ -58,7 +58,6 @@ void	MessageHandler::parseMessage() {
 
 void	MessageHandler::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string commandName = stringToLower(cmdWithArgs.at(0));
-	std::cout << "++++++++++++++++cmdName: " << commandName << std::endl;
 	
 	Command *cmd = Command::createCmd(commandName, cmdWithArgs, fromUser);
 	if (cmd != NULL) {
