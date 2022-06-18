@@ -14,7 +14,8 @@ endif
 
 SRCS = srcs/main.cpp \
 	srcs/ClientSocket.cpp \
-	srcs/ClientEngine.cpp
+	srcs/ClientEngine.cpp \
+	srcs/Color.cpp
 	
 
 OBJS = $(SRCS:.cpp=.o)

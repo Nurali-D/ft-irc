@@ -24,7 +24,8 @@ class Command
 			WHO,
 			BOT,
 			NAMES,
-			LIST
+			LIST,
+			FROMBOT
 		};
 
 	protected:

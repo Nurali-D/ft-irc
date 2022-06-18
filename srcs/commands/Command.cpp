@@ -14,6 +14,7 @@
 #include "BotCmd.hpp"
 #include "NamesCmd.hpp"
 #include "ListCmd.hpp"
+#include "FromBotCmd.hpp"
 
 
 // MARK: - Class Constructor
@@ -27,7 +28,7 @@ Command::Command(Command::CmdType cmd, std::vector<std::string> &args, User *use
 {}
 
 const std::string Command::cmdsArray[] = {"pass", "nick", "user", "privmsg", "join", "ping", 
-	"kick", "notice", "topic", "quit", "who", "bot", "names", "list"};
+	"kick", "notice", "topic", "quit", "who", "bot", "names", "list", "frombot"};
 // note: индекс команд 
 // в массиве cmdsArray должен совпадать c последовательностью в enum CmdType
 
@@ -83,6 +84,9 @@ Command *Command::createCmd(std::string &cmdName, std::vector<std::string> &args
 			return new NamesCmd(args, user);
 		case LIST :
 			return new ListCmd(args, user);
+		case FROMBOT :
+			std::cout << "test case frombot\n";
+			return new FromBotCmd(args, user);
 		
 		// note: добавлять сюда все остальные команды и в cmdsArray
 	}

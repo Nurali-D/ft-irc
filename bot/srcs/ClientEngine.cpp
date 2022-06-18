@@ -1,4 +1,5 @@
 #include "ClientEngine.hpp"
+#include "Color.hpp"
 
 ClientEngine::ClientEngine(ClientSocket &cs) : cs(cs) {
 	sendMsgs.push("nick SuperBot");
@@ -57,7 +58,6 @@ void	ClientEngine::readFromClientSocket(int i, struct kevent *eventList)
 		exit (-1);
 	}
 	readedMsg = recv_msg(eventList[i].ident, (int)eventList[i].data);
-	// std::cout << "=======>\n" << readedMsg << "-------------" << std::endl;
 	if (readedMsg.rfind(":server", 0) == std::string::npos) {
 		parseMsg();
 	}
@@ -95,23 +95,15 @@ void	ClientEngine::parseMsg() {
 	if (readedMsg != "") {
 		cmdWithArgs.push_back(readedMsg);
 	}
-	// for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
-	// 	std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
-	// 	if (i == 2) {
-	// 		char zero = cmdWithArgs.at(i).at(0);
-	// 		std::cout << (int)zero << std::endl;
-	// 		zero = cmdWithArgs.at(i).at(1);
-	// 		std::cout << (int)zero << std::endl;
-	// 		zero = cmdWithArgs.at(i).at(2);
-	// 		std::cout << (int)zero << std::endl;
-	// 	}
-	// }
 	findCommand(cmdWithArgs);
 }
 
 void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 	std::string msg;
 	size_t size = cmdWithArgs.size();
+	if (std::find(cmdWithArgs.begin(), cmdWithArgs.end(), "NICK") != cmdWithArgs.end()) {
+		return ;
+	}
 	if (size < 3) {
 		
 		msg = "Need more params. See \"bot help\"";
@@ -122,15 +114,32 @@ void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 		char c = 28;
 		std::string smile(1, c);
 		smile += "penguin";
-		msg += "\n - " + smile;
-		c = 3;
-		std::string color_start(1, c);
-		std::string purple = color_start + "13";
-		std::string green = color_start + "9";
-		msg += "\n- " + green + "BOT save_channel #channel_name " + purple + " - saves channel on server after quiting all users;";
-		msg += "\n- " + green + "BOT cpp_test start " + purple + " - start cpp test.";
-		msg += "\n- " + green + "BOT vote <answer's_number> " + purple + " - answer the question.";
+		msg += "\n - " + smile + smile + smile + smile + smile + smile + smile;
+		msg += "\n- " + Color::turnPink("BOT help ") 
+			+ Color::turnBlue(" - bot menu;");
+		msg += "\n- " + Color::turnPink("BOT savechan #channel_name ") 
+			+ Color::turnBlue(" - saves channel on server after quiting all users;");
+		msg += "\n- " + Color::turnPink("BOT send user number smile ") 
+			+ Color::turnBlue(" - sends number * smile.");
+		
 		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
+		msg = "";
+	} else if (cmdWithArgs.at(2) == "savechan") {
+		sendMsgs.push("JOIN " + cmdWithArgs.at(3));
+		msg = "\n- " + Color::turnYellow(cmdWithArgs.at(3)) 
+			+ Color::turnBlue(" - bot joined to channel for saving it.");
+		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
+		msg = "";
+	} else if (cmdWithArgs.at(2) == "send") {
+		std::string fromUser = cmdWithArgs.at(0);
+		std::string toUser = cmdWithArgs.at(3);
+		int n = std::atoi(cmdWithArgs.at(4).c_str());
+		std::string msgToMultiply =cmdWithArgs.at(5);
+
+		for (int i = 0; i < n; ++i) {
+			msg += msgToMultiply + " ";
+		}
+		sendMsgs.push("FROMBOT " + fromUser + " " + toUser + " :" + msg);
 	}
 	
 }
@@ -157,7 +166,6 @@ void	ClientEngine::writeToClientSocket(int i, struct kevent *eventList)
 		 
 		std::string msg = sendMsgs.front();
 		msg += "\r\n";
-		std::cout << "=========>" << msg;
 		sendMsgs.pop();
 		ssize_t sended = send(eventList[i].ident, msg.c_str(), msg.length(), 0);
 		if (sended == -1) {
