@@ -14,6 +14,9 @@ NoticeCmd::~NoticeCmd(void) {}
 // MARK: - Class Methods
 
 void	NoticeCmd::execute(void) {
+	if (user->getState() != User::ACTIVE)
+		return ;
+
 	if (args.size() != 4)
 		return ;
 
