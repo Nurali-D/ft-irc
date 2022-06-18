@@ -95,17 +95,17 @@ void	ClientEngine::parseMsg() {
 	if (readedMsg != "") {
 		cmdWithArgs.push_back(readedMsg);
 	}
-	for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
-		std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
-		if (i == 2) {
-			char zero = cmdWithArgs.at(i).at(0);
-			std::cout << (int)zero << std::endl;
-			zero = cmdWithArgs.at(i).at(1);
-			std::cout << (int)zero << std::endl;
-			zero = cmdWithArgs.at(i).at(2);
-			std::cout << (int)zero << std::endl;
-		}
-	}
+	// for (size_t i = 0; i < cmdWithArgs.size(); ++i) {
+	// 	std::cout << i << "---->" << cmdWithArgs.at(i) << std::endl;
+	// 	if (i == 2) {
+	// 		char zero = cmdWithArgs.at(i).at(0);
+	// 		std::cout << (int)zero << std::endl;
+	// 		zero = cmdWithArgs.at(i).at(1);
+	// 		std::cout << (int)zero << std::endl;
+	// 		zero = cmdWithArgs.at(i).at(2);
+	// 		std::cout << (int)zero << std::endl;
+	// 	}
+	// }
 	findCommand(cmdWithArgs);
 }
 
@@ -116,6 +116,7 @@ void		ClientEngine::findCommand(std::vector<std::string> &cmdWithArgs) {
 		
 		msg = "Need more params. See \"bot help\"";
 		sendMsgs.push("PRIVMSG " + cmdWithArgs.at(0) + " :" + msg);
+		return ;
 	}
 	if (cmdWithArgs.at(2) == "help") {
 		char c = 28;
